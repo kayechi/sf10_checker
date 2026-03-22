@@ -1,0 +1,201 @@
+student_id,last_name,first_name,middle_name,program,year_enrolled,shs_name,status_passed_sf10
+20270100,Garcia,Luis,Kasilag,ACT,2027,City Science HS,no
+20270101,Gonzalez,Jose,Alonzo,BSCS,2027,Provincial High,true
+20270102,Aguilar,Juan,Clemente,BSIT,2027,St. Jude Academy,no
+20270103,Gonzalez,Teresa,Tolentino,BSCS,2027,National Science High,passed
+20270104,Castro,Carlos,Fernando,BSIS,2027,National Science High,no
+20270105,Mercado,Miguel,Salvador,BSCS,2027,Rizal Memorial,0
+20270106,Aguilar,Sofia,Kasilag,BSCS,2027,Mabini High,0
+20270107,Sy,Luis,Jacinto,BSIS,2027,City Science HS,no
+20270108,Gonzalez,Juan,Tolentino,BSIT,2027,Valley View Academy,false
+20270109,Navarro,Sofia,Jacinto,ACT,2027,Valley View Academy,passed
+20270110,Del Rosario,Julio,Evangelista,BSIT,2027,Tech High School,passed
+20270111,Santos,Ramon,Laxamana,BSCS,2027,St. Jude Academy,yes
+20270112,Ramos,Marco,Zaragoza,BSCS,2027,City Science HS,0
+20270113,Santos,Ramon,Gomez,BSIT,2027,Rizal Memorial,false
+20270114,Santos,Teresa,Ignacio,BSCS,2027,Eastern Standard High,false
+20270115,Castro,Carlos,Pascual,BSSE,2027,Valley View Academy,true
+20270116,Mercado,Maria,Macapagal,BSSE,2027,City Science HS,yes
+20270117,Reyes,Teresa,Dalisay,BSIS,2027,Rizal Memorial,yes
+20270118,Reyes,Julio,Bernardo,BSIS,2027,Provincial High,yes
+20270119,Reyes,Miguel,Clemente,BSSE,2027,Tech High School,true
+20270120,Aguilar,Enrique,Zaragoza,BSIT,2027,National Science High,1
+20270121,Villanueva,Ramon,Ignacio,BSIT,2027,Mabini High,0
+20270122,Mercado,Sofia,Zaragoza,BSIT,2027,National Science High,true
+20270123,Castro,Pedro,Valdez,BSIT,2027,Provincial High,yes
+20270124,De Leon,Julio,Salvador,ACT,2027,Rizal Memorial,0
+20270125,Mendoza,Miguel,Kasilag,BSIT,2027,Metro Manila High,no
+20270126,Reyes,Enrique,Valdez,BSSE,2027,National Science High,passed
+20270127,Lim,Enrique,Evangelista,BSCS,2027,Provincial High,0
+20270128,Ramos,Maria,Alonzo,BSCS,2027,National Science High,false
+20270129,Ramos,Luis,Reyes,BSIT,2027,Eastern Standard High,0
+20270130,Santos,Ramon,Valdez,BSIS,2027,City Science HS,0
+20270131,Reyes,Angelica,Fernando,BSIS,2027,Metro Manila High,passed
+20270132,Lim,Miguel,Hernandez,BSIT,2027,Eastern Standard High,0
+20270133,Mercado,Angelica,Fernando,BSIS,2027,National Science High,yes
+20270134,Castro,Ramon,Bernardo,ACT,2027,Valley View Academy,no
+20270135,Navarro,Miguel,Quizon,ACT,2027,Metro Manila High,yes
+20270136,Santos,Paolo,Hernandez,BSCS,2027,Rizal Memorial,passed
+20270137,Torres,Paolo,Jacinto,BSIS,2027,Metro Manila High,no
+20270138,Del Rosario,Carla,Salvador,BSIS,2027,City Science HS,no
+20270139,Aquino,Marco,Gomez,BSIT,2027,City Science HS,1
+20270140,Cruz,Ramon,Clemente,BSCS,2027,Mabini High,true
+20270141,Villanueva,Carlos,Reyes,BSIT,2027,Tech High School,passed
+20270142,Lim,Juan,Bernardo,BSCS,2027,Provincial High,yes
+20270143,Torres,Marco,Dalisay,BSSE,2027,Tech High School,yes
+20270144,Bautista,Julio,Laxamana,BSSE,2027,Mabini High,1
+20270145,Ramos,Maria,Navarro,BSCS,2027,Mabini High,true
+20270146,Navarro,Carlos,Jacinto,BSIS,2027,City Science HS,true
+20270147,Reyes,Enrique,Kasilag,BSIS,2027,St. Jude Academy,passed
+20270148,Tan,Carla,Salvador,ACT,2027,National Science High,no
+20270149,Cruz,Bea,Clemente,ACT,2027,Rizal Memorial,false
+20270150,Reyes,Ramon,Macapagal,BSSE,2027,Rizal Memorial,true
+20270151,Torres,Angelica,Alonzo,BSIS,2027,Rizal Memorial,passed
+20270152,Gonzalez,Julio,Alonzo,BSSE,2027,Tech High School,0
+20270153,Garcia,Maria,Kasilag,BSCS,2027,National Science High,0
+20270154,Mercado,Miguel,Valdez,BSIS,2027,Provincial High,false
+20270155,De Leon,Anna,Hernandez,BSIS,2027,Tech High School,yes
+20270156,Tan,Anna,Bernardo,BSSE,2027,Rizal Memorial,0
+20270157,Ramos,Teresa,Bernardo,BSIS,2027,Mabini High,false
+20270158,Lim,Marco,Pascual,BSIS,2027,Eastern Standard High,yes
+20270159,Reyes,Carlos,Zaragoza,BSSE,2027,St. Jude Academy,no
+20270160,Ramos,Enrique,Reyes,ACT,2027,Provincial High,yes
+20270161,Torres,Diana,Ocampo,ACT,2027,City Science HS,passed
+20270162,Aguilar,Luis,Jacinto,BSCS,2027,Metro Manila High,yes
+20270163,Tan,Carla,Jacinto,ACT,2027,St. Jude Academy,no
+20270164,Reyes,Diana,Salvador,ACT,2027,St. Jude Academy,passed
+20270165,Aguilar,Bea,Kasilag,BSIS,2027,Eastern Standard High,false
+20270166,Lim,Julio,Alonzo,ACT,2027,Eastern Standard High,0
+20270167,Sy,Marco,Bernardo,BSIT,2027,National Science High,true
+20270168,Mercado,Luis,Ignacio,BSCS,2027,National Science High,0
+20270169,Mercado,Diana,Kasilag,BSCS,2027,Valley View Academy,true
+20270170,Mendoza,Pedro,Clemente,BSSE,2027,Provincial High,no
+20270171,Tan,Ramon,Gomez,ACT,2027,St. Jude Academy,0
+20270172,De Leon,Miguel,Zaragoza,BSSE,2027,Eastern Standard High,0
+20270173,De Leon,Carla,Kasilag,BSIS,2027,St. Jude Academy,passed
+20270174,Villanueva,Luis,Bernardo,BSSE,2027,Provincial High,false
+20270175,Gonzalez,Ramon,Salvador,ACT,2027,National Science High,1
+20270176,Torres,Sofia,Valdez,ACT,2027,Mabini High,0
+20270177,Mendoza,Bea,Laxamana,BSCS,2027,City Science HS,false
+20270178,Ramos,Angelica,Pascual,ACT,2027,Provincial High,passed
+20270179,Gonzalez,Angelica,Kasilag,BSCS,2027,Tech High School,1
+20270180,Cruz,Bea,Valdez,BSIS,2027,City Science HS,true
+20270181,Garcia,Bea,Tolentino,BSIS,2027,St. Jude Academy,0
+20270182,Lim,Jose,Dalisay,BSIT,2027,Rizal Memorial,yes
+20270183,Santos,Juan,Quizon,BSIT,2027,City Science HS,0
+20270184,Castro,Teresa,Evangelista,BSIT,2027,Rizal Memorial,yes
+20270185,Ramos,Enrique,Alonzo,BSIT,2027,National Science High,1
+20270186,Sy,Sofia,Macapagal,BSIT,2027,St. Jude Academy,passed
+20270187,Castro,Maria,Reyes,BSIS,2027,Mabini High,no
+20270188,Tan,Julio,Dalisay,BSCS,2027,National Science High,0
+20270189,Gonzalez,Carlos,Clemente,BSCS,2027,Provincial High,true
+20270190,Gonzalez,Bea,Salvador,BSIS,2027,Mabini High,false
+20270191,De Leon,Anna,Hernandez,BSIT,2027,Metro Manila High,yes
+20270192,Mercado,Ramon,Dalisay,BSSE,2027,City Science HS,0
+20270193,Lim,Juan,Tolentino,BSSE,2027,Valley View Academy,1
+20270194,Ramos,Carlos,Ocampo,BSSE,2027,City Science HS,false
+20270195,Villanueva,Diana,Pascual,BSSE,2027,Tech High School,false
+20270196,Aguilar,Diana,Zaragoza,BSIS,2027,City Science HS,0
+20270197,Del Rosario,Enrique,Laxamana,BSIT,2027,City Science HS,passed
+20270198,Sy,Miguel,Navarro,ACT,2027,St. Jude Academy,no
+20270199,Villanueva,Teresa,Pascual,BSCS,2027,Eastern Standard High,yes
+20270200,Tan,Juan,Laxamana,BSCS,2027,St. Jude Academy,0
+20270201,Santos,Miguel,Laxamana,ACT,2027,Mabini High,false
+20270202,Reyes,Bea,Pascual,BSIS,2027,St. Jude Academy,0
+20270203,Aguilar,Bea,Fernando,BSIT,2027,Provincial High,no
+20270204,Cruz,Anna,Quizon,BSSE,2027,Eastern Standard High,passed
+20270205,Aguilar,Carla,Pascual,BSSE,2027,National Science High,passed
+20270206,Navarro,Julio,Fernando,ACT,2027,City Science HS,yes
+20270207,Gonzalez,Rosa,Evangelista,BSSE,2027,Provincial High,true
+20270208,Bautista,Maria,Clemente,BSCS,2027,Metro Manila High,true
+20270209,Aguilar,Maria,Jacinto,ACT,2027,St. Jude Academy,true
+20270210,Mendoza,Juan,Salvador,BSSE,2027,Mabini High,1
+20270211,Garcia,Carla,Fernando,ACT,2027,Tech High School,true
+20270212,Torres,Ramon,Fernando,ACT,2027,Valley View Academy,false
+20270213,Santos,Marco,Valdez,ACT,2027,St. Jude Academy,true
+20270214,Lim,Marco,Gomez,BSSE,2027,Rizal Memorial,passed
+20270215,Lim,Paolo,Gomez,BSSE,2027,City Science HS,no
+20270216,Gonzalez,Luis,Alonzo,ACT,2027,Eastern Standard High,yes
+20270217,Torres,Bea,Zaragoza,BSIS,2027,Provincial High,1
+20270218,Torres,Bea,Ocampo,BSIT,2027,Rizal Memorial,0
+20270219,Ramos,Carlos,Gomez,ACT,2027,Tech High School,false
+20270220,Sy,Carla,Ocampo,BSIS,2027,Rizal Memorial,false
+20270221,Tan,Jose,Ignacio,BSIS,2027,Mabini High,1
+20270222,Ramos,Carla,Bernardo,ACT,2027,Provincial High,no
+20270223,Cruz,Carlos,Macapagal,BSIS,2027,Rizal Memorial,true
+20270224,Aguilar,Paolo,Jacinto,BSIT,2027,Metro Manila High,0
+20270225,Tan,Carlos,Hernandez,BSIS,2027,National Science High,false
+20270226,Navarro,Marco,Gomez,ACT,2027,City Science HS,0
+20270227,Villanueva,Paolo,Alonzo,BSIT,2027,Mabini High,true
+20270228,Aguilar,Teresa,Evangelista,ACT,2027,Valley View Academy,1
+20270229,Tan,Sofia,Dalisay,BSIT,2027,National Science High,false
+20270230,Gonzalez,Teresa,Navarro,BSIT,2027,City Science HS,no
+20270231,Santos,Paolo,Dalisay,BSCS,2027,Eastern Standard High,false
+20270232,Bautista,Enrique,Navarro,BSSE,2027,St. Jude Academy,passed
+20270233,De Leon,Ramon,Fernando,BSIS,2027,Valley View Academy,false
+20270234,Navarro,Bea,Salvador,BSCS,2027,Mabini High,true
+20270235,Villanueva,Diana,Evangelista,ACT,2027,Tech High School,false
+20270236,Mercado,Rosa,Dalisay,BSIS,2027,St. Jude Academy,true
+20270237,Mercado,Angelica,Dalisay,BSSE,2027,Eastern Standard High,1
+20270238,Santos,Angelica,Reyes,BSSE,2027,Metro Manila High,true
+20270239,Reyes,Carlos,Zaragoza,BSIS,2027,National Science High,yes
+20270240,Cruz,Julio,Dalisay,BSIS,2027,Valley View Academy,false
+20270241,Villanueva,Carla,Tolentino,ACT,2027,St. Jude Academy,0
+20270242,Mendoza,Julio,Jacinto,BSCS,2027,Rizal Memorial,0
+20270243,Gonzalez,Carlos,Salvador,BSIS,2027,Eastern Standard High,false
+20270244,Ramos,Carlos,Bernardo,BSCS,2027,Eastern Standard High,true
+20270245,Bautista,Julio,Ignacio,BSIS,2027,Valley View Academy,passed
+20270246,Cruz,Anna,Gomez,BSCS,2027,Metro Manila High,true
+20270247,Del Rosario,Jose,Alonzo,BSCS,2027,Provincial High,0
+20270248,Sy,Carla,Kasilag,BSIT,2027,Metro Manila High,no
+20270249,Villanueva,Jose,Navarro,BSSE,2027,Metro Manila High,false
+20270250,Navarro,Carlos,Gomez,BSCS,2027,Valley View Academy,0
+20270251,Torres,Marco,Gomez,ACT,2027,National Science High,yes
+20270252,Aquino,Carla,Zaragoza,BSIS,2027,Rizal Memorial,yes
+20270253,Mercado,Rosa,Hernandez,BSCS,2027,Valley View Academy,1
+20270254,Ramos,Sofia,Ocampo,BSIT,2027,St. Jude Academy,no
+20270255,Castro,Luis,Clemente,BSCS,2027,National Science High,yes
+20270256,Aguilar,Maria,Alonzo,BSCS,2027,Eastern Standard High,no
+20270257,Mendoza,Ramon,Alonzo,BSSE,2027,Metro Manila High,false
+20270258,Castro,Jose,Fernando,BSSE,2027,Metro Manila High,1
+20270259,Del Rosario,Carlos,Gomez,BSCS,2027,St. Jude Academy,no
+20270260,Villanueva,Julio,Valdez,BSSE,2027,National Science High,false
+20270261,Lim,Pedro,Gomez,BSSE,2027,National Science High,0
+20270262,Sy,Jose,Pascual,ACT,2027,Mabini High,yes
+20270263,Reyes,Paolo,Dalisay,BSSE,2027,Rizal Memorial,1
+20270264,Torres,Marco,Gomez,BSIT,2027,St. Jude Academy,yes
+20270265,Villanueva,Anna,Ignacio,ACT,2027,St. Jude Academy,passed
+20270266,Torres,Enrique,Evangelista,BSIS,2027,Eastern Standard High,1
+20270267,Bautista,Sofia,Fernando,BSSE,2027,National Science High,yes
+20270268,Ramos,Angelica,Zaragoza,BSSE,2027,Mabini High,false
+20270269,De Leon,Carlos,Macapagal,BSIS,2027,National Science High,passed
+20270270,Cruz,Angelica,Kasilag,ACT,2027,City Science HS,true
+20270271,Mercado,Luis,Quizon,BSSE,2027,National Science High,true
+20270272,Santos,Juan,Gomez,ACT,2027,Mabini High,yes
+20270273,Tan,Anna,Hernandez,BSIT,2027,St. Jude Academy,1
+20270274,Lim,Anna,Valdez,BSSE,2027,City Science HS,passed
+20270275,Castro,Pedro,Navarro,ACT,2027,Eastern Standard High,no
+20270276,De Leon,Angelica,Pascual,BSIS,2027,St. Jude Academy,passed
+20270277,Tan,Juan,Zaragoza,BSIT,2027,Rizal Memorial,false
+20270278,Lim,Angelica,Hernandez,BSIT,2027,National Science High,false
+20270279,Tan,Angelica,Reyes,BSIS,2027,Valley View Academy,passed
+20270280,Torres,Jose,Zaragoza,BSIS,2027,Mabini High,passed
+20270281,Sy,Anna,Dalisay,BSIS,2027,Eastern Standard High,true
+20270282,Navarro,Bea,Reyes,ACT,2027,Tech High School,yes
+20270283,Reyes,Bea,Clemente,BSIS,2027,Tech High School,1
+20270284,Del Rosario,Sofia,Evangelista,BSIS,2027,St. Jude Academy,true
+20270285,Castro,Anna,Salvador,BSSE,2027,National Science High,1
+20270286,Cruz,Bea,Hernandez,BSCS,2027,Valley View Academy,no
+20270287,Mendoza,Julio,Dalisay,BSIS,2027,Valley View Academy,1
+20270288,Sy,Maria,Hernandez,ACT,2027,Eastern Standard High,true
+20270289,Reyes,Angelica,Reyes,ACT,2027,St. Jude Academy,0
+20270290,Aquino,Rosa,Dalisay,BSIT,2027,National Science High,yes
+20270291,Aguilar,Teresa,Clemente,BSCS,2027,Eastern Standard High,false
+20270292,Gonzalez,Teresa,Ignacio,BSIT,2027,Rizal Memorial,0
+20270293,Mercado,Pedro,Reyes,BSSE,2027,St. Jude Academy,0
+20270294,Navarro,Miguel,Navarro,BSIS,2027,Valley View Academy,yes
+20270295,Torres,Anna,Jacinto,BSSE,2027,City Science HS,no
+20270296,Tan,Carlos,Alonzo,BSIT,2027,Mabini High,false
+20270297,Garcia,Paolo,Jacinto,BSSE,2027,Provincial High,no
+20270298,Tan,Miguel,Pascual,ACT,2027,Rizal Memorial,true
+20270299,Garcia,Diana,Quizon,BSCS,2027,Eastern Standard High,yes

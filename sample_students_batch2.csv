@@ -1,0 +1,501 @@
+student_id,last_name,first_name,middle_name,program,year_enrolled,shs_name,status_passed_sf10
+20271000,Mendoza,Bea,Jacinto,BSEE,2027,Integrated School of Science,true
+20271001,Gonzalez,Paolo,Dalisay,BSA,2027,Eastern Standard High,yes
+20241002,Navarro,Anna,Gomez,BSCE,2024,National Science High,passed
+20241003,De Leon,Diana,Salvador,BSN,2024,City Science HS,false
+20241004,Torres,Gabriel,Valdez,BSN,2024,Valley View Academy,yes
+20251005,Santos,Jose,Alonzo,BSA,2025,Tech High School,false
+20271006,De Leon,Lucia,Evangelista,BSIT,2027,St. Jude Academy,no
+20231007,Del Rosario,Maria,Dalisay,BSCpE,2023,St. Jude Academy,false
+20251008,Reyes,Enrique,Pascual,BSSE,2025,Eastern Standard High,false
+20231009,Garcia,Gabriel,Hernandez,BSSE,2023,City Science HS,0
+20251010,Navarro,Maria,Navarro,BSHRM,2025,Eastern Standard High,passed
+20241011,Aguilar,Anna,Pascual,BSEd,2024,Rizal Memorial,true
+20231012,Reyes,Jose,Salvador,BSEEd,2023,Pioneer Academy,yes
+20251013,Villanueva,Juan,Reyes,BSCpE,2025,Metro Manila High,yes
+20231014,Garcia,Luis,Jacinto,BSIT,2023,Valley View Academy,passed
+20251015,Perez,Anna,Kasilag,BSBAMkg,2025,Rizal Memorial,true
+20221016,Navarro,Mateo,Ignacio,BSSE,2022,Pioneer Academy,no
+20241017,Cruz,Angelica,Ocampo,BSHRM,2024,Valley View Academy,true
+20251018,Aguilar,Gabriel,Clemente,BSCE,2025,Mabini High,1
+20261019,Bautista,Pedro,Pascual,BSSE,2026,Integrated School of Science,no
+20251020,Ramos,Enrique,Dalisay,ACT,2025,Integrated School of Science,yes
+20231021,Gonzalez,Anna,Reyes,BSCE,2023,Tech High School,false
+20261022,Tan,Miguel,Tolentino,ABComm,2026,City Science HS,passed
+20231023,Bautista,Enrique,Ocampo,ACT,2023,Tech High School,0
+20251024,Ramos,Lucia,Gomez,BSBAMkg,2025,St. Jude Academy,yes
+20271025,Bautista,Juan,Pascual,BSEEd,2027,Eastern Standard High,yes
+20261026,Villanueva,Juan,Pascual,BSIT,2026,Mabini High,true
+20251027,Lim,Paolo,Macapagal,BSEd,2025,National Science High,no
+20241028,Castro,Gabriel,Clemente,BSCpE,2024,Rizal Memorial,0
+20251029,Perez,Juan,Dalisay,BSBAMkg,2025,Metro Manila High,yes
+20221030,Gonzalez,Marco,Dalisay,ACT,2022,Eastern Standard High,yes
+20271031,Villanueva,Enrique,Dalisay,BSIT,2027,St. Jude Academy,false
+20261032,Navarro,Carlos,Ignacio,BSBAHRM,2026,St. Jude Academy,true
+20231033,Gomez,Enrique,Evangelista,BSCpE,2023,Tech High School,passed
+20251034,Ramos,Bea,Reyes,BSBAMkg,2025,Provincial High,true
+20241035,Del Rosario,Bea,Clemente,BSCpE,2024,National Science High,no
+20251036,Lim,Juan,Macapagal,BSIS,2025,Pioneer Academy,passed
+20261037,Gonzalez,Sofia,Alonzo,BSEd,2026,Mabini High,false
+20261038,De Leon,Sofia,Tolentino,BSHRM,2026,St. Jude Academy,passed
+20221039,Villanueva,Pedro,Reyes,BSEd,2022,Valley View Academy,true
+20221040,Bautista,Teresa,Salvador,BSEd,2022,Eastern Standard High,passed
+20221041,Gonzalez,Lucia,Laxamana,BSSE,2022,Valley View Academy,false
+20271042,Mendoza,Julio,Pascual,BSCS,2027,Pioneer Academy,false
+20271043,Perez,Bea,Kasilag,BSHRM,2027,Provincial High,yes
+20231044,Lim,Mateo,Hernandez,BSIS,2023,St. Jude Academy,passed
+20231045,Tan,Anna,Jacinto,ACT,2023,Valley View Academy,0
+20251046,Tan,Rosa,Quizon,BSEEd,2025,Rizal Memorial,0
+20221047,Ramos,Marco,Hernandez,BSA,2022,Tech High School,no
+20231048,Torres,Julio,Navarro,BSBAMkg,2023,Rizal Memorial,passed
+20241049,Navarro,Angelica,Bernardo,BSEE,2024,Metro Manila High,passed
+20231050,Gonzalez,Julio,Gomez,BSA,2023,National Science High,yes
+20241051,Aquino,Paolo,Zaragoza,ABComm,2024,Mabini High,1
+20251052,Sy,Angelica,Quizon,BSSE,2025,St. Jude Academy,false
+20251053,Torres,Mateo,Bernardo,BSN,2025,Provincial High,no
+20271054,Navarro,Enrique,Kasilag,BSEEd,2027,Pioneer Academy,true
+20231055,Aguilar,Juan,Zaragoza,BSME,2023,Pioneer Academy,true
+20241056,Torres,Rosa,Dalisay,BSEd,2024,Mabini High,yes
+20261057,Aguilar,Gabriel,Gomez,BSBAMkg,2026,Eastern Standard High,no
+20221058,Del Rosario,Maria,Dalisay,BSCS,2022,Eastern Standard High,no
+20231059,Garcia,Diego,Salvador,ABComm,2023,St. Jude Academy,passed
+20241060,Bautista,Maria,Navarro,BSHRM,2024,National Science High,true
+20251061,Castro,Miguel,Ignacio,BSHRM,2025,Eastern Standard High,no
+20271062,Bautista,Marco,Jacinto,BSEE,2027,Tech High School,1
+20221063,De Leon,Lucia,Ocampo,ABComm,2022,Metro Manila High,yes
+20271064,Del Rosario,Ramon,Ignacio,BSA,2027,Valley View Academy,yes
+20241065,Perez,Elena,Laxamana,ABComm,2024,Valley View Academy,true
+20271066,Ramos,Teresa,Ignacio,BSBAMkg,2027,Rizal Memorial,false
+20251067,Torres,Ramon,Ignacio,BSIT,2025,Metro Manila High,1
+20271068,Perez,Rosa,Jacinto,BSBAMkg,2027,Metro Manila High,false
+20241069,Torres,Jose,Valdez,ABComm,2024,Rizal Memorial,passed
+20221070,Ramos,Miguel,Valdez,BSME,2022,Mabini High,no
+20221071,Del Rosario,Carla,Ignacio,BSEd,2022,National Science High,true
+20221072,Aguilar,Julio,Valdez,BSIT,2022,Metro Manila High,true
+20221073,Perez,Marco,Gomez,ABComm,2022,City Science HS,false
+20261074,Mercado,Marco,Valdez,BSME,2026,Mabini High,yes
+20221075,Bautista,Luis,Dalisay,BSME,2022,City Science HS,passed
+20231076,Lim,Maria,Salvador,BSIS,2023,St. Jude Academy,1
+20241077,Bautista,Miguel,Clemente,BSIT,2024,Eastern Standard High,true
+20241078,Aguilar,Julio,Quizon,BSBAHRM,2024,Provincial High,0
+20241079,Mendoza,Lucia,Kasilag,BSEd,2024,Valley View Academy,0
+20221080,Reyes,Marco,Gomez,BSIS,2022,Mabini High,0
+20241081,Gomez,Pedro,Hernandez,BSEE,2024,St. Jude Academy,no
+20231082,Ramos,Teresa,Quizon,BSCE,2023,Valley View Academy,true
+20241083,Sy,Pedro,Zaragoza,BSEd,2024,National Science High,true
+20241084,Aguilar,Teresa,Navarro,BSIT,2024,Rizal Memorial,yes
+20241085,Del Rosario,Julio,Reyes,BSBAMkg,2024,Integrated School of Science,true
+20221086,Sy,Mateo,Ocampo,BSIT,2022,Mabini High,0
+20251087,Bautista,Diego,Kasilag,BSCE,2025,Provincial High,false
+20241088,Bautista,Sofia,Tolentino,BSN,2024,City Science HS,passed
+20221089,Reyes,Elena,Bernardo,BSHRM,2022,National Science High,true
+20231090,Mendoza,Gabriel,Evangelista,BSME,2023,St. Jude Academy,1
+20221091,De Leon,Pedro,Kasilag,BSN,2022,St. Jude Academy,false
+20271092,Santos,Miguel,Macapagal,BSSE,2027,Eastern Standard High,yes
+20271093,Aguilar,Ramon,Clemente,ACT,2027,Rizal Memorial,passed
+20221094,Villanueva,Gabriel,Tolentino,BSIS,2022,Rizal Memorial,passed
+20221095,Navarro,Marco,Bernardo,BSEd,2022,St. Jude Academy,false
+20221096,Villanueva,Gabriel,Alonzo,BSCpE,2022,Provincial High,false
+20261097,Tan,Marco,Clemente,BSBAMkg,2026,City Science HS,1
+20231098,Aguilar,Angelica,Ignacio,ACT,2023,St. Jude Academy,false
+20251099,Castro,Angelica,Reyes,BSHRM,2025,Valley View Academy,true
+20221100,Castro,Carlos,Macapagal,BSEE,2022,St. Jude Academy,false
+20231101,Mercado,Mateo,Laxamana,BSCpE,2023,Integrated School of Science,0
+20241102,Castro,Miguel,Laxamana,ABComm,2024,Pioneer Academy,true
+20261103,Garcia,Marco,Salvador,BSBAHRM,2026,Eastern Standard High,1
+20261104,Ramos,Angelica,Zaragoza,BSEEd,2026,Mabini High,passed
+20261105,De Leon,Diego,Dalisay,BSIS,2026,Integrated School of Science,passed
+20251106,Torres,Julio,Gomez,BSIS,2025,Provincial High,no
+20241107,Reyes,Pedro,Salvador,ACT,2024,Pioneer Academy,false
+20271108,Cruz,Sofia,Kasilag,BSIS,2027,National Science High,true
+20261109,Del Rosario,Luis,Navarro,BSBAHRM,2026,Integrated School of Science,true
+20271110,Reyes,Teresa,Kasilag,ABComm,2027,Integrated School of Science,true
+20231111,Bautista,Anna,Clemente,BSCE,2023,Eastern Standard High,0
+20221112,Perez,Pedro,Jacinto,ACT,2022,Mabini High,0
+20221113,Ramos,Diana,Jacinto,BSN,2022,Eastern Standard High,1
+20231114,Gonzalez,Carlos,Valdez,BSCE,2023,Provincial High,yes
+20241115,Castro,Mateo,Ocampo,BSHRM,2024,National Science High,no
+20221116,Cruz,Pedro,Bernardo,BSCS,2022,Metro Manila High,no
+20241117,Lim,Miguel,Hernandez,BSA,2024,Pioneer Academy,true
+20231118,Santos,Julio,Clemente,BSCpE,2023,Rizal Memorial,0
+20261119,Navarro,Diego,Gomez,BSIS,2026,Pioneer Academy,true
+20261120,Del Rosario,Julio,Tolentino,BSIT,2026,St. Jude Academy,true
+20221121,Navarro,Julio,Pascual,BSCS,2022,Tech High School,false
+20261122,Torres,Anna,Fernando,BSN,2026,City Science HS,yes
+20261123,Garcia,Bea,Laxamana,ABComm,2026,Mabini High,false
+20251124,Tan,Maria,Ocampo,BSME,2025,Tech High School,false
+20231125,De Leon,Angelica,Alonzo,BSEEd,2023,Valley View Academy,1
+20271126,Perez,Pedro,Alonzo,BSCS,2027,Tech High School,no
+20231127,Tan,Bea,Zaragoza,BSHRM,2023,Tech High School,yes
+20241128,Gonzalez,Juan,Bernardo,BSEEd,2024,Integrated School of Science,false
+20261129,Castro,Enrique,Ignacio,BSEd,2026,Valley View Academy,no
+20221130,Mendoza,Julio,Reyes,BSCS,2022,City Science HS,passed
+20231131,Tan,Pedro,Gomez,BSSE,2023,Pioneer Academy,passed
+20271132,Gomez,Bea,Valdez,BSCE,2027,Eastern Standard High,yes
+20241133,Aguilar,Carla,Pascual,BSCS,2024,St. Jude Academy,true
+20231134,Garcia,Diana,Jacinto,BSCE,2023,City Science HS,passed
+20221135,Aquino,Angelica,Salvador,BSEEd,2022,Tech High School,false
+20241136,Del Rosario,Rosa,Ocampo,BSBAHRM,2024,Metro Manila High,false
+20271137,Mercado,Enrique,Hernandez,BSCS,2027,Pioneer Academy,no
+20271138,Aquino,Jose,Fernando,BSEd,2027,Provincial High,true
+20221139,Reyes,Ramon,Ignacio,ABComm,2022,Integrated School of Science,false
+20261140,Gonzalez,Elena,Pascual,BSIT,2026,Mabini High,true
+20241141,Torres,Carlos,Clemente,ABComm,2024,Pioneer Academy,false
+20251142,Del Rosario,Teresa,Salvador,ACT,2025,National Science High,passed
+20221143,Aguilar,Marco,Bernardo,BSCS,2022,Tech High School,0
+20221144,Sy,Angelica,Ocampo,BSEEd,2022,Integrated School of Science,1
+20221145,Cruz,Ramon,Reyes,BSEd,2022,St. Jude Academy,false
+20271146,Bautista,Paolo,Kasilag,BSBAHRM,2027,National Science High,false
+20271147,Ramos,Gabriel,Bernardo,BSEE,2027,City Science HS,1
+20241148,Del Rosario,Miguel,Hernandez,BSME,2024,St. Jude Academy,passed
+20271149,Cruz,Julio,Valdez,ACT,2027,Pioneer Academy,passed
+20221150,Mercado,Diana,Macapagal,BSSE,2022,Rizal Memorial,yes
+20261151,Castro,Julio,Salvador,BSIS,2026,Mabini High,0
+20221152,Aguilar,Carla,Kasilag,BSBAMkg,2022,Valley View Academy,1
+20251153,Del Rosario,Mateo,Laxamana,BSBAMkg,2025,Eastern Standard High,yes
+20261154,Bautista,Carlos,Ocampo,ACT,2026,Eastern Standard High,false
+20271155,Aquino,Jose,Jacinto,BSIT,2027,City Science HS,0
+20261156,De Leon,Marco,Jacinto,BSEd,2026,Rizal Memorial,yes
+20241157,Garcia,Julio,Fernando,ABComm,2024,Integrated School of Science,passed
+20221158,Ramos,Paolo,Reyes,BSA,2022,Mabini High,yes
+20231159,Gomez,Carla,Evangelista,BSIS,2023,Integrated School of Science,0
+20271160,Aquino,Enrique,Kasilag,BSA,2027,Eastern Standard High,no
+20221161,Mendoza,Angelica,Fernando,BSCpE,2022,St. Jude Academy,1
+20241162,Perez,Gabriel,Gomez,BSHRM,2024,Valley View Academy,true
+20261163,Ramos,Sofia,Dalisay,BSA,2026,Pioneer Academy,false
+20221164,Navarro,Jose,Dalisay,BSSE,2022,Provincial High,false
+20221165,Tan,Enrique,Dalisay,BSN,2022,Valley View Academy,yes
+20271166,Reyes,Paolo,Jacinto,ABComm,2027,Tech High School,no
+20261167,Tan,Pedro,Reyes,BSEd,2026,Mabini High,false
+20231168,Lim,Sofia,Valdez,BSSE,2023,Integrated School of Science,0
+20221169,Tan,Juan,Dalisay,BSEE,2022,Integrated School of Science,yes
+20261170,Tan,Rosa,Laxamana,BSME,2026,Pioneer Academy,false
+20271171,Gonzalez,Carlos,Bernardo,BSIS,2027,Valley View Academy,0
+20251172,Perez,Pedro,Macapagal,BSN,2025,National Science High,passed
+20231173,De Leon,Gabriel,Zaragoza,BSCS,2023,Provincial High,passed
+20251174,Tan,Diana,Kasilag,BSME,2025,Eastern Standard High,no
+20271175,Gonzalez,Miguel,Evangelista,BSBAHRM,2027,Provincial High,no
+20261176,Torres,Ramon,Fernando,BSIS,2026,Valley View Academy,1
+20261177,Santos,Julio,Jacinto,BSCS,2026,Metro Manila High,false
+20251178,Navarro,Anna,Reyes,BSN,2025,St. Jude Academy,yes
+20241179,Cruz,Gabriel,Zaragoza,BSBAMkg,2024,Valley View Academy,false
+20221180,Tan,Rosa,Reyes,BSIT,2022,Tech High School,0
+20221181,Gonzalez,Diana,Valdez,BSCS,2022,Metro Manila High,0
+20261182,Perez,Bea,Laxamana,BSN,2026,St. Jude Academy,0
+20261183,Santos,Diana,Navarro,ACT,2026,Rizal Memorial,passed
+20261184,Mercado,Jose,Dalisay,BSBAMkg,2026,City Science HS,yes
+20221185,Mendoza,Maria,Quizon,BSCpE,2022,Rizal Memorial,yes
+20241186,De Leon,Juan,Fernando,BSCpE,2024,National Science High,true
+20241187,Bautista,Pedro,Fernando,BSSE,2024,Tech High School,false
+20261188,Tan,Diana,Zaragoza,BSCpE,2026,Rizal Memorial,yes
+20231189,Aquino,Gabriel,Clemente,BSCS,2023,Tech High School,true
+20221190,Gonzalez,Paolo,Zaragoza,BSA,2022,National Science High,no
+20221191,Santos,Ramon,Ocampo,BSA,2022,Provincial High,passed
+20261192,Torres,Paolo,Quizon,BSN,2026,Provincial High,yes
+20241193,Bautista,Julio,Fernando,BSIS,2024,Rizal Memorial,0
+20241194,Tan,Diana,Bernardo,BSCpE,2024,Provincial High,true
+20271195,Santos,Juan,Ignacio,BSBAMkg,2027,Pioneer Academy,1
+20271196,Tan,Jose,Pascual,ACT,2027,St. Jude Academy,yes
+20261197,Sy,Paolo,Laxamana,BSIT,2026,Tech High School,yes
+20221198,Gonzalez,Gabriel,Hernandez,BSIS,2022,Valley View Academy,true
+20241199,Villanueva,Carla,Reyes,BSEEd,2024,Eastern Standard High,1
+20261200,Gonzalez,Sofia,Quizon,ABComm,2026,Metro Manila High,0
+20231201,Aquino,Jose,Zaragoza,BSCpE,2023,Integrated School of Science,false
+20221202,Mendoza,Pedro,Reyes,ABComm,2022,National Science High,false
+20261203,Mercado,Pedro,Clemente,BSME,2026,Metro Manila High,passed
+20221204,Gonzalez,Rosa,Zaragoza,BSEE,2022,St. Jude Academy,yes
+20241205,De Leon,Paolo,Quizon,BSHRM,2024,City Science HS,1
+20241206,Garcia,Angelica,Laxamana,BSN,2024,Metro Manila High,1
+20241207,Gonzalez,Diego,Navarro,BSN,2024,Rizal Memorial,yes
+20251208,Tan,Carla,Pascual,BSEE,2025,Metro Manila High,false
+20221209,Navarro,Pedro,Ignacio,BSBAHRM,2022,Pioneer Academy,1
+20241210,Bautista,Jose,Fernando,BSCpE,2024,City Science HS,passed
+20241211,Navarro,Luis,Quizon,BSCpE,2024,Mabini High,no
+20231212,Aguilar,Julio,Bernardo,BSCS,2023,St. Jude Academy,no
+20221213,Navarro,Angelica,Pascual,BSN,2022,St. Jude Academy,1
+20261214,Reyes,Enrique,Quizon,BSBAHRM,2026,Mabini High,yes
+20251215,Villanueva,Luis,Alonzo,BSN,2025,National Science High,yes
+20261216,Perez,Enrique,Ocampo,BSN,2026,Eastern Standard High,true
+20231217,Santos,Teresa,Valdez,BSIS,2023,City Science HS,true
+20231218,Gonzalez,Bea,Valdez,BSEE,2023,Tech High School,yes
+20241219,Castro,Sofia,Laxamana,BSN,2024,Mabini High,0
+20261220,Gomez,Enrique,Valdez,BSBAMkg,2026,City Science HS,yes
+20241221,Garcia,Mateo,Macapagal,BSSE,2024,Tech High School,yes
+20231222,Santos,Anna,Laxamana,BSBAMkg,2023,City Science HS,no
+20241223,Santos,Pedro,Reyes,BSA,2024,Rizal Memorial,1
+20231224,Cruz,Lucia,Jacinto,BSIS,2023,Valley View Academy,1
+20231225,Mendoza,Miguel,Fernando,BSME,2023,Eastern Standard High,1
+20231226,Ramos,Gabriel,Kasilag,BSIT,2023,Integrated School of Science,0
+20251227,Villanueva,Paolo,Salvador,BSHRM,2025,St. Jude Academy,passed
+20271228,Reyes,Teresa,Ocampo,BSN,2027,Tech High School,false
+20271229,Del Rosario,Mateo,Jacinto,BSBAHRM,2027,Tech High School,0
+20221230,Castro,Enrique,Zaragoza,BSEd,2022,Metro Manila High,no
+20231231,De Leon,Marco,Navarro,BSHRM,2023,Mabini High,true
+20221232,De Leon,Diana,Gomez,BSIT,2022,Mabini High,true
+20271233,Aquino,Elena,Fernando,BSCpE,2027,Rizal Memorial,no
+20251234,Mendoza,Luis,Quizon,BSIT,2025,Metro Manila High,no
+20231235,Santos,Diego,Alonzo,ACT,2023,Eastern Standard High,true
+20261236,Ramos,Enrique,Jacinto,BSCS,2026,Pioneer Academy,false
+20221237,Sy,Juan,Kasilag,BSBAMkg,2022,Tech High School,0
+20251238,Castro,Elena,Laxamana,BSCS,2025,Rizal Memorial,false
+20231239,Gomez,Rosa,Macapagal,BSHRM,2023,St. Jude Academy,passed
+20251240,Navarro,Diana,Kasilag,BSN,2025,Metro Manila High,no
+20251241,Sy,Juan,Alonzo,BSME,2025,National Science High,false
+20271242,Del Rosario,Teresa,Gomez,BSHRM,2027,City Science HS,true
+20221243,Reyes,Pedro,Jacinto,BSME,2022,Mabini High,false
+20251244,Mercado,Carlos,Laxamana,BSEE,2025,Metro Manila High,passed
+20231245,Villanueva,Juan,Pascual,BSSE,2023,National Science High,passed
+20261246,Torres,Miguel,Ignacio,BSEd,2026,Mabini High,no
+20231247,Aguilar,Paolo,Ignacio,ACT,2023,Metro Manila High,0
+20261248,Lim,Carlos,Pascual,BSBAHRM,2026,Rizal Memorial,no
+20231249,Santos,Jose,Macapagal,BSEEd,2023,Tech High School,0
+20241250,Gonzalez,Teresa,Macapagal,BSCpE,2024,Valley View Academy,0
+20261251,Villanueva,Julio,Valdez,BSIT,2026,National Science High,no
+20221252,Santos,Luis,Quizon,BSHRM,2022,National Science High,true
+20251253,Gomez,Pedro,Pascual,BSA,2025,Metro Manila High,false
+20231254,Villanueva,Juan,Quizon,BSEd,2023,St. Jude Academy,1
+20271255,Mercado,Elena,Jacinto,ACT,2027,St. Jude Academy,no
+20241256,Reyes,Bea,Ocampo,BSHRM,2024,Mabini High,0
+20241257,Villanueva,Marco,Reyes,BSBAMkg,2024,Valley View Academy,1
+20241258,Torres,Teresa,Kasilag,BSME,2024,Metro Manila High,0
+20271259,Santos,Paolo,Valdez,BSBAMkg,2027,City Science HS,no
+20241260,Mendoza,Bea,Quizon,BSCS,2024,Integrated School of Science,0
+20231261,Villanueva,Diana,Pascual,BSME,2023,Eastern Standard High,passed
+20271262,Aquino,Juan,Clemente,BSCS,2027,Provincial High,false
+20271263,Bautista,Gabriel,Clemente,BSCE,2027,Pioneer Academy,1
+20261264,Lim,Sofia,Clemente,BSBAMkg,2026,St. Jude Academy,passed
+20261265,Bautista,Mateo,Kasilag,BSA,2026,City Science HS,false
+20271266,Aguilar,Angelica,Hernandez,BSCS,2027,Metro Manila High,true
+20261267,Aquino,Teresa,Tolentino,BSME,2026,National Science High,0
+20241268,Aguilar,Marco,Macapagal,BSCpE,2024,St. Jude Academy,yes
+20261269,Torres,Lucia,Navarro,ABComm,2026,Pioneer Academy,true
+20221270,Mercado,Enrique,Bernardo,BSEEd,2022,Provincial High,yes
+20241271,Castro,Julio,Hernandez,BSHRM,2024,Provincial High,true
+20271272,Mercado,Carlos,Alonzo,BSSE,2027,Tech High School,false
+20271273,Sy,Anna,Pascual,BSIT,2027,Tech High School,1
+20251274,Aguilar,Lucia,Ocampo,ABComm,2025,Eastern Standard High,false
+20221275,Sy,Maria,Zaragoza,BSN,2022,Pioneer Academy,true
+20251276,Reyes,Marco,Laxamana,BSEEd,2025,National Science High,false
+20241277,Aguilar,Enrique,Gomez,ACT,2024,Metro Manila High,0
+20271278,Mendoza,Carlos,Fernando,BSME,2027,Rizal Memorial,yes
+20261279,Villanueva,Carla,Valdez,BSIT,2026,Rizal Memorial,no
+20241280,Torres,Miguel,Pascual,BSA,2024,Tech High School,passed
+20271281,Bautista,Julio,Kasilag,BSME,2027,Eastern Standard High,true
+20241282,Del Rosario,Miguel,Alonzo,BSBAMkg,2024,Mabini High,true
+20261283,Castro,Diana,Fernando,BSIS,2026,Eastern Standard High,passed
+20261284,Gonzalez,Diana,Laxamana,ABComm,2026,Rizal Memorial,0
+20251285,Garcia,Teresa,Evangelista,BSCS,2025,Tech High School,1
+20241286,Castro,Miguel,Macapagal,BSEE,2024,Valley View Academy,no
+20261287,Sy,Jose,Tolentino,BSSE,2026,Pioneer Academy,true
+20221288,Villanueva,Gabriel,Macapagal,ACT,2022,Valley View Academy,false
+20251289,Del Rosario,Miguel,Dalisay,BSCE,2025,St. Jude Academy,true
+20261290,Mercado,Juan,Valdez,ABComm,2026,Pioneer Academy,1
+20261291,Aquino,Luis,Reyes,BSIT,2026,Provincial High,yes
+20261292,Tan,Maria,Dalisay,BSEd,2026,St. Jude Academy,yes
+20261293,Tan,Teresa,Alonzo,BSIT,2026,Eastern Standard High,0
+20261294,Navarro,Mateo,Tolentino,BSHRM,2026,Eastern Standard High,false
+20231295,Perez,Anna,Valdez,BSN,2023,Provincial High,true
+20261296,Gonzalez,Juan,Kasilag,BSCE,2026,Pioneer Academy,false
+20231297,Aguilar,Juan,Navarro,BSBAMkg,2023,Mabini High,no
+20261298,Aquino,Sofia,Valdez,BSIT,2026,St. Jude Academy,0
+20221299,Torres,Marco,Quizon,BSHRM,2022,Provincial High,1
+20221300,Gomez,Jose,Reyes,BSME,2022,Rizal Memorial,no
+20231301,Bautista,Pedro,Dalisay,BSN,2023,Integrated School of Science,yes
+20231302,Sy,Bea,Gomez,BSA,2023,City Science HS,false
+20241303,Ramos,Teresa,Evangelista,BSBAMkg,2024,Pioneer Academy,1
+20251304,Navarro,Diego,Salvador,BSEE,2025,Metro Manila High,true
+20251305,Garcia,Ramon,Gomez,BSEEd,2025,City Science HS,passed
+20221306,Garcia,Carla,Fernando,BSBAHRM,2022,Rizal Memorial,false
+20221307,Santos,Marco,Alonzo,BSCS,2022,Metro Manila High,passed
+20271308,Navarro,Carlos,Pascual,BSME,2027,Pioneer Academy,passed
+20241309,Castro,Diana,Valdez,BSHRM,2024,Integrated School of Science,1
+20261310,Garcia,Carlos,Tolentino,BSCE,2026,National Science High,no
+20251311,Sy,Juan,Clemente,BSBAHRM,2025,City Science HS,yes
+20231312,De Leon,Juan,Alonzo,ABComm,2023,St. Jude Academy,1
+20271313,Gonzalez,Julio,Alonzo,ABComm,2027,City Science HS,no
+20241314,Santos,Julio,Alonzo,BSBAMkg,2024,Metro Manila High,0
+20271315,Del Rosario,Carla,Dalisay,BSCpE,2027,City Science HS,0
+20241316,Aguilar,Lucia,Ignacio,BSIT,2024,City Science HS,passed
+20221317,Ramos,Marco,Hernandez,BSIS,2022,Eastern Standard High,false
+20261318,Perez,Teresa,Zaragoza,BSCpE,2026,City Science HS,true
+20221319,Reyes,Carla,Navarro,BSCS,2022,Tech High School,true
+20271320,Aquino,Gabriel,Ocampo,BSSE,2027,Tech High School,1
+20271321,Perez,Maria,Jacinto,BSCS,2027,Metro Manila High,yes
+20251322,De Leon,Mateo,Pascual,BSSE,2025,Metro Manila High,passed
+20261323,Santos,Miguel,Quizon,BSCS,2026,Metro Manila High,no
+20241324,Perez,Rosa,Ocampo,BSME,2024,St. Jude Academy,yes
+20261325,Aquino,Rosa,Valdez,BSCS,2026,National Science High,no
+20251326,Reyes,Ramon,Navarro,BSIS,2025,Pioneer Academy,true
+20261327,Reyes,Diego,Zaragoza,BSA,2026,Eastern Standard High,no
+20241328,Gonzalez,Sofia,Ignacio,BSCpE,2024,City Science HS,yes
+20261329,Santos,Sofia,Pascual,BSN,2026,Provincial High,1
+20271330,Gonzalez,Ramon,Jacinto,BSIT,2027,Provincial High,no
+20261331,Gomez,Teresa,Evangelista,BSEd,2026,Provincial High,1
+20221332,Tan,Rosa,Clemente,BSEE,2022,Valley View Academy,no
+20221333,Santos,Ramon,Salvador,BSEE,2022,St. Jude Academy,yes
+20241334,Reyes,Marco,Valdez,BSIS,2024,Provincial High,false
+20231335,Navarro,Paolo,Evangelista,BSCS,2023,Eastern Standard High,0
+20231336,Gonzalez,Maria,Dalisay,BSEE,2023,Eastern Standard High,true
+20241337,Castro,Pedro,Reyes,BSHRM,2024,Mabini High,true
+20241338,Garcia,Luis,Macapagal,BSIT,2024,Eastern Standard High,no
+20261339,Del Rosario,Rosa,Bernardo,BSBAMkg,2026,Provincial High,0
+20271340,Villanueva,Gabriel,Alonzo,BSME,2027,Eastern Standard High,yes
+20261341,Aguilar,Diana,Bernardo,BSME,2026,City Science HS,yes
+20261342,Ramos,Ramon,Hernandez,BSME,2026,Mabini High,true
+20271343,Villanueva,Luis,Hernandez,BSCE,2027,City Science HS,passed
+20251344,Aguilar,Carlos,Evangelista,BSSE,2025,Metro Manila High,0
+20261345,Navarro,Diego,Clemente,BSCpE,2026,Integrated School of Science,1
+20251346,Lim,Carla,Reyes,ACT,2025,Pioneer Academy,false
+20271347,Ramos,Elena,Quizon,BSCS,2027,Integrated School of Science,no
+20261348,Gomez,Pedro,Macapagal,BSEEd,2026,Integrated School of Science,no
+20261349,Sy,Carla,Bernardo,BSEd,2026,Rizal Memorial,no
+20241350,Castro,Rosa,Reyes,BSBAMkg,2024,Integrated School of Science,true
+20271351,Villanueva,Gabriel,Bernardo,BSME,2027,Mabini High,false
+20271352,Tan,Teresa,Evangelista,BSEEd,2027,Valley View Academy,true
+20221353,Perez,Diego,Jacinto,BSBAMkg,2022,Valley View Academy,passed
+20271354,Bautista,Julio,Ocampo,BSCpE,2027,Eastern Standard High,yes
+20261355,Tan,Juan,Bernardo,BSBAHRM,2026,Integrated School of Science,1
+20251356,Villanueva,Teresa,Evangelista,BSCS,2025,Metro Manila High,0
+20241357,Aguilar,Sofia,Laxamana,BSME,2024,Mabini High,false
+20251358,Aquino,Maria,Gomez,BSEEd,2025,Pioneer Academy,1
+20241359,Ramos,Julio,Bernardo,ABComm,2024,National Science High,yes
+20251360,Reyes,Ramon,Salvador,BSCS,2025,Valley View Academy,no
+20231361,Reyes,Bea,Zaragoza,BSA,2023,Provincial High,no
+20241362,Torres,Luis,Salvador,ACT,2024,Metro Manila High,false
+20221363,Aquino,Enrique,Valdez,BSN,2022,St. Jude Academy,false
+20251364,Ramos,Ramon,Ignacio,BSCS,2025,Metro Manila High,yes
+20221365,Sy,Bea,Macapagal,BSBAHRM,2022,Tech High School,no
+20251366,Mercado,Marco,Clemente,BSHRM,2025,Eastern Standard High,yes
+20271367,Ramos,Rosa,Macapagal,BSBAHRM,2027,Pioneer Academy,passed
+20271368,Sy,Carla,Jacinto,BSEEd,2027,St. Jude Academy,passed
+20261369,Bautista,Mateo,Bernardo,BSHRM,2026,Rizal Memorial,true
+20251370,De Leon,Rosa,Zaragoza,BSCpE,2025,Rizal Memorial,yes
+20241371,Ramos,Paolo,Gomez,BSN,2024,National Science High,no
+20231372,Aguilar,Lucia,Fernando,BSCpE,2023,Eastern Standard High,no
+20221373,Reyes,Marco,Laxamana,BSHRM,2022,Tech High School,yes
+20251374,Mendoza,Ramon,Valdez,BSIS,2025,City Science HS,true
+20231375,Navarro,Teresa,Kasilag,BSME,2023,Tech High School,passed
+20231376,Torres,Julio,Laxamana,ACT,2023,Integrated School of Science,no
+20231377,Navarro,Sofia,Pascual,BSME,2023,City Science HS,yes
+20271378,Torres,Angelica,Dalisay,BSIT,2027,Provincial High,no
+20251379,Santos,Paolo,Macapagal,BSIT,2025,National Science High,passed
+20241380,Lim,Paolo,Bernardo,BSBAHRM,2024,Valley View Academy,no
+20241381,Torres,Gabriel,Fernando,BSBAHRM,2024,City Science HS,no
+20251382,Aquino,Luis,Salvador,BSCE,2025,National Science High,passed
+20231383,Gonzalez,Diego,Alonzo,BSBAMkg,2023,Valley View Academy,1
+20241384,Del Rosario,Sofia,Dalisay,BSHRM,2024,Tech High School,1
+20251385,De Leon,Carla,Kasilag,BSCS,2025,Rizal Memorial,no
+20261386,Reyes,Carlos,Navarro,BSN,2026,Tech High School,no
+20261387,Lim,Rosa,Salvador,BSCS,2026,Pioneer Academy,1
+20241388,Aguilar,Anna,Navarro,BSCpE,2024,Tech High School,passed
+20261389,Villanueva,Pedro,Fernando,BSA,2026,Rizal Memorial,0
+20261390,Mercado,Ramon,Jacinto,ABComm,2026,Rizal Memorial,0
+20271391,Del Rosario,Miguel,Macapagal,BSCpE,2027,National Science High,0
+20251392,Cruz,Mateo,Salvador,ACT,2025,Mabini High,no
+20261393,Santos,Angelica,Laxamana,ABComm,2026,Tech High School,yes
+20221394,Santos,Jose,Dalisay,BSEEd,2022,Provincial High,passed
+20251395,Perez,Ramon,Bernardo,BSEEd,2025,Provincial High,true
+20261396,Santos,Enrique,Tolentino,ACT,2026,Mabini High,no
+20231397,Santos,Julio,Macapagal,BSHRM,2023,Valley View Academy,0
+20221398,Reyes,Paolo,Bernardo,BSN,2022,Integrated School of Science,false
+20241399,Navarro,Marco,Salvador,BSME,2024,National Science High,no
+20261400,Navarro,Maria,Pascual,BSA,2026,Integrated School of Science,passed
+20241401,Gonzalez,Paolo,Macapagal,BSCpE,2024,Integrated School of Science,1
+20251402,Tan,Mateo,Valdez,BSHRM,2025,Eastern Standard High,yes
+20271403,Cruz,Ramon,Fernando,BSA,2027,Valley View Academy,yes
+20241404,Del Rosario,Lucia,Tolentino,BSCpE,2024,Tech High School,0
+20261405,Gomez,Teresa,Ocampo,BSCpE,2026,National Science High,0
+20251406,Bautista,Paolo,Salvador,BSSE,2025,City Science HS,yes
+20241407,Gonzalez,Teresa,Gomez,BSA,2024,Integrated School of Science,yes
+20261408,Ramos,Diana,Ocampo,BSCE,2026,Tech High School,false
+20261409,Cruz,Maria,Clemente,BSCpE,2026,National Science High,passed
+20251410,Reyes,Marco,Reyes,BSEE,2025,Integrated School of Science,true
+20271411,Gomez,Mateo,Fernando,BSCE,2027,National Science High,0
+20231412,Castro,Sofia,Gomez,BSME,2023,Integrated School of Science,yes
+20241413,Santos,Marco,Reyes,BSCpE,2024,Mabini High,yes
+20221414,Perez,Teresa,Tolentino,ACT,2022,City Science HS,true
+20261415,Santos,Marco,Reyes,BSEd,2026,Integrated School of Science,1
+20231416,Aguilar,Sofia,Tolentino,BSCS,2023,Provincial High,no
+20261417,Reyes,Carla,Gomez,BSN,2026,National Science High,false
+20231418,Torres,Mateo,Macapagal,BSA,2023,Integrated School of Science,true
+20231419,Del Rosario,Sofia,Navarro,BSCE,2023,Tech High School,no
+20261420,Gomez,Carla,Clemente,BSEE,2026,National Science High,passed
+20251421,Villanueva,Jose,Laxamana,BSA,2025,Mabini High,yes
+20271422,Aquino,Rosa,Pascual,BSBAHRM,2027,National Science High,no
+20271423,Reyes,Marco,Tolentino,BSHRM,2027,Mabini High,0
+20241424,Mercado,Rosa,Dalisay,BSSE,2024,Metro Manila High,1
+20251425,Aguilar,Diana,Evangelista,BSBAMkg,2025,Tech High School,no
+20271426,Castro,Luis,Laxamana,BSCE,2027,Eastern Standard High,true
+20231427,Sy,Julio,Reyes,BSBAMkg,2023,National Science High,no
+20261428,Aguilar,Diego,Bernardo,BSEE,2026,Provincial High,yes
+20231429,Gomez,Bea,Laxamana,BSCE,2023,Tech High School,no
+20241430,Perez,Gabriel,Kasilag,BSEd,2024,Valley View Academy,no
+20261431,Del Rosario,Diego,Reyes,BSN,2026,Rizal Memorial,true
+20251432,De Leon,Diego,Valdez,BSHRM,2025,Tech High School,no
+20261433,Cruz,Mateo,Dalisay,BSBAHRM,2026,Mabini High,yes
+20231434,Torres,Carlos,Pascual,BSIT,2023,St. Jude Academy,true
+20271435,Aquino,Elena,Valdez,BSIT,2027,Integrated School of Science,yes
+20221436,Torres,Julio,Jacinto,BSEEd,2022,Tech High School,no
+20231437,Gonzalez,Anna,Clemente,BSEEd,2023,Valley View Academy,1
+20241438,Mendoza,Rosa,Zaragoza,ABComm,2024,Eastern Standard High,1
+20221439,Perez,Angelica,Laxamana,BSSE,2022,National Science High,0
+20241440,Ramos,Carlos,Quizon,BSCpE,2024,Pioneer Academy,0
+20261441,Navarro,Sofia,Fernando,BSME,2026,Mabini High,false
+20271442,Tan,Paolo,Hernandez,BSIS,2027,Metro Manila High,passed
+20251443,Del Rosario,Maria,Kasilag,BSME,2025,Valley View Academy,yes
+20271444,Tan,Luis,Hernandez,BSSE,2027,City Science HS,1
+20261445,Cruz,Juan,Pascual,BSN,2026,Rizal Memorial,false
+20261446,Perez,Bea,Pascual,BSEE,2026,Rizal Memorial,passed
+20271447,Garcia,Mateo,Valdez,BSCE,2027,Rizal Memorial,true
+20261448,Tan,Angelica,Reyes,BSEd,2026,National Science High,passed
+20261449,Mendoza,Diego,Navarro,BSBAMkg,2026,Tech High School,0
+20231450,De Leon,Sofia,Clemente,BSEEd,2023,Provincial High,true
+20221451,Gonzalez,Angelica,Bernardo,BSME,2022,Valley View Academy,no
+20231452,Navarro,Diego,Zaragoza,BSEEd,2023,Mabini High,false
+20271453,Santos,Juan,Fernando,ABComm,2027,Mabini High,false
+20221454,Del Rosario,Gabriel,Ocampo,ACT,2022,St. Jude Academy,0
+20261455,Reyes,Miguel,Gomez,BSHRM,2026,Eastern Standard High,0
+20251456,Mercado,Carla,Evangelista,BSIS,2025,Mabini High,true
+20241457,Garcia,Elena,Ocampo,ABComm,2024,Provincial High,0
+20231458,Aguilar,Elena,Dalisay,BSEE,2023,Eastern Standard High,0
+20261459,Garcia,Diana,Ignacio,BSIS,2026,Metro Manila High,1
+20261460,Aguilar,Diego,Ignacio,BSA,2026,Valley View Academy,yes
+20221461,Aquino,Paolo,Reyes,BSN,2022,National Science High,passed
+20231462,Aquino,Angelica,Ocampo,ABComm,2023,Metro Manila High,false
+20271463,Reyes,Carlos,Jacinto,BSCE,2027,Valley View Academy,true
+20231464,Villanueva,Luis,Kasilag,BSCE,2023,Rizal Memorial,no
+20261465,Reyes,Luis,Jacinto,BSEEd,2026,Rizal Memorial,no
+20231466,Gomez,Rosa,Ignacio,BSME,2023,St. Jude Academy,false
+20251467,Perez,Paolo,Reyes,ABComm,2025,Provincial High,0
+20231468,Gomez,Lucia,Clemente,BSCS,2023,Provincial High,passed
+20271469,Perez,Pedro,Fernando,BSN,2027,National Science High,no
+20261470,Sy,Paolo,Ignacio,BSEEd,2026,Tech High School,0
+20261471,De Leon,Carlos,Kasilag,BSA,2026,City Science HS,passed
+20221472,Aquino,Jose,Gomez,ABComm,2022,Provincial High,false
+20251473,Sy,Paolo,Laxamana,BSBAMkg,2025,National Science High,false
+20261474,Mendoza,Jose,Evangelista,BSSE,2026,Pioneer Academy,false
+20251475,Bautista,Julio,Kasilag,BSBAHRM,2025,Tech High School,0
+20271476,Mercado,Diego,Ignacio,BSSE,2027,Rizal Memorial,false
+20261477,Ramos,Carlos,Macapagal,ACT,2026,Integrated School of Science,passed
+20271478,Aguilar,Angelica,Ignacio,BSN,2027,Tech High School,1
+20261479,Santos,Jose,Pascual,BSIT,2026,Metro Manila High,yes
+20221480,Castro,Teresa,Laxamana,BSHRM,2022,Valley View Academy,1
+20241481,Cruz,Enrique,Navarro,BSEEd,2024,Rizal Memorial,passed
+20221482,Mercado,Anna,Salvador,BSHRM,2022,Integrated School of Science,no
+20241483,Reyes,Diana,Macapagal,BSIT,2024,Pioneer Academy,yes
+20271484,Tan,Jose,Laxamana,BSBAMkg,2027,Rizal Memorial,1
+20231485,Mendoza,Elena,Laxamana,BSBAMkg,2023,Mabini High,yes
+20271486,Navarro,Bea,Evangelista,BSHRM,2027,Integrated School of Science,no
+20231487,Navarro,Enrique,Bernardo,ACT,2023,City Science HS,no
+20221488,Mercado,Luis,Laxamana,BSA,2022,Valley View Academy,true
+20231489,Santos,Maria,Fernando,BSBAMkg,2023,City Science HS,true
+20251490,Torres,Maria,Tolentino,BSCE,2025,Valley View Academy,yes
+20271491,Castro,Teresa,Jacinto,BSBAMkg,2027,Metro Manila High,false
+20261492,Navarro,Teresa,Reyes,BSBAHRM,2026,Valley View Academy,passed
+20271493,Cruz,Diana,Navarro,BSEE,2027,Mabini High,passed
+20251494,Bautista,Paolo,Ignacio,BSIS,2025,National Science High,no
+20231495,Aguilar,Sofia,Reyes,BSN,2023,Integrated School of Science,no
+20231496,Gomez,Marco,Jacinto,BSBAMkg,2023,National Science High,passed
+20241497,Mercado,Elena,Laxamana,BSIT,2024,Metro Manila High,yes
+20261498,Lim,Sofia,Kasilag,BSHRM,2026,National Science High,0
+20271499,Gonzalez,Marco,Ocampo,BSSE,2027,Integrated School of Science,true
