@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { api, Student } from "../lib/api";
-import { Search, Loader2 } from "lucide-react";
+import { Search, Loader2, X } from "lucide-react";
 
 export default function Tables() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -170,39 +170,17 @@ export default function Tables() {
                 </tr>
               )}
               {sortedStudents.map((student) => {
-                const isEditing = editingId === student.student_id;
-                
                 return (
                   <tr key={student.student_id} className="hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors">
                     <td className="px-6 py-4 font-medium">{student.student_id}</td>
                     
-                    {isEditing ? (
-                      <>
-                        <td className="px-6 py-2">
-                          <input type="text" className="w-full px-3 py-1.5 border border-neutral-300 dark:border-neutral-700 rounded-lg bg-transparent focus:ring-2 focus:ring-primary-500 outline-none" value={editForm.last_name || ""} onChange={e => setEditForm({...editForm, last_name: e.target.value})} />
-                        </td>
-                        <td className="px-6 py-2">
-                          <input type="text" className="w-full px-3 py-1.5 border border-neutral-300 dark:border-neutral-700 rounded-lg bg-transparent focus:ring-2 focus:ring-primary-500 outline-none" value={editForm.first_name || ""} onChange={e => setEditForm({...editForm, first_name: e.target.value})} />
-                        </td>
-                        <td className="px-6 py-2">
-                          <input type="text" className="w-full px-3 py-1.5 border border-neutral-300 dark:border-neutral-700 rounded-lg bg-transparent focus:ring-2 focus:ring-primary-500 outline-none" value={editForm.middle_name || ""} onChange={e => setEditForm({...editForm, middle_name: e.target.value})} />
-                        </td>
-                        <td className="px-6 py-2">
-                          <input type="text" className="w-full px-3 py-1.5 border border-neutral-300 dark:border-neutral-700 rounded-lg bg-transparent focus:ring-2 focus:ring-primary-500 outline-none" value={editForm.program || ""} onChange={e => setEditForm({...editForm, program: e.target.value})} />
-                        </td>
-                        <td className="px-6 py-2">
-                          <input type="text" className="w-full px-3 py-1.5 border border-neutral-300 dark:border-neutral-700 rounded-lg bg-transparent focus:ring-2 focus:ring-primary-500 outline-none" value={editForm.shs_name || ""} onChange={e => setEditForm({...editForm, shs_name: e.target.value})} />
-                        </td>
-                      </>
-                    ) : (
-                      <>
-                        <td className="px-6 py-4 max-w-[150px] sm:max-w-[200px] truncate" title={student.last_name}>{student.last_name}</td>
-                        <td className="px-6 py-4 max-w-[150px] sm:max-w-[200px] truncate" title={student.first_name}>{student.first_name}</td>
-                        <td className="px-6 py-4 max-w-[100px] sm:max-w-[150px] truncate text-neutral-500" title={student.middle_name || ""}>{student.middle_name || "-"}</td>
-                        <td className="px-6 py-4 font-medium text-primary-600 dark:text-primary-400 max-w-[150px] truncate" title={student.program}>{student.program}</td>
-                        <td className="px-6 py-4 max-w-[150px] sm:max-w-[250px] truncate text-neutral-500" title={student.shs_name || ""}>{student.shs_name || "-"}</td>
-                      </>
-                    )}
+                    <>
+                      <td className="px-6 py-4 max-w-[150px] sm:max-w-[200px] truncate" title={student.last_name}>{student.last_name}</td>
+                      <td className="px-6 py-4 max-w-[150px] sm:max-w-[200px] truncate" title={student.first_name}>{student.first_name}</td>
+                      <td className="px-6 py-4 max-w-[100px] sm:max-w-[150px] truncate text-neutral-500" title={student.middle_name || ""}>{student.middle_name || "-"}</td>
+                      <td className="px-6 py-4 font-medium text-primary-600 dark:text-primary-400 max-w-[150px] truncate" title={student.program}>{student.program}</td>
+                      <td className="px-6 py-4 max-w-[150px] sm:max-w-[250px] truncate text-neutral-500" title={student.shs_name || ""}>{student.shs_name || "-"}</td>
+                    </>
                     
                     <td className="px-6 py-4">
                       <button 
@@ -218,16 +196,9 @@ export default function Tables() {
                     </td>
                     
                     <td className="px-6 py-4 text-right">
-                      {isEditing ? (
-                        <div className="flex justify-end gap-3">
-                           <button onClick={() => setEditingId(null)} className="text-sm text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 font-medium">Cancel</button>
-                           <button onClick={saveEdit} className="text-sm font-semibold text-primary-600 hover:text-primary-700 dark:text-primary-400 px-3 py-1 bg-primary-50 dark:bg-primary-900/20 rounded-lg">Save</button>
-                        </div>
-                      ) : (
-                        <button onClick={() => startEditing(student)} className="text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400">
-                          Edit
-                        </button>
-                      )}
+                      <button onClick={() => startEditing(student)} className="text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400">
+                        Edit
+                      </button>
                     </td>
                   </tr>
                 );
@@ -236,6 +207,88 @@ export default function Tables() {
           </table>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      {editingId && (
+        <div className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-xl w-full max-w-md border border-neutral-200 dark:border-neutral-800 flex flex-col overflow-hidden max-h-full">
+            <div className="flex items-center justify-between p-6 border-b border-neutral-200 dark:border-neutral-800 flex-shrink-0">
+              <h3 className="text-xl font-bold tracking-tight">Edit Student Record</h3>
+              <button 
+                onClick={() => setEditingId(null)}
+                className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="p-6 space-y-4 overflow-y-auto">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Last Name</label>
+                <input 
+                  type="text" 
+                  value={editForm.last_name || ""} 
+                  onChange={e => setEditForm({...editForm, last_name: e.target.value})}
+                  className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">First Name</label>
+                <input 
+                  type="text" 
+                  value={editForm.first_name || ""} 
+                  onChange={e => setEditForm({...editForm, first_name: e.target.value})}
+                  className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Middle Name</label>
+                <input 
+                  type="text" 
+                  value={editForm.middle_name || ""} 
+                  onChange={e => setEditForm({...editForm, middle_name: e.target.value})}
+                  className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Course</label>
+                <input 
+                  type="text" 
+                  value={editForm.program || ""} 
+                  onChange={e => setEditForm({...editForm, program: e.target.value})}
+                  className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">SHS Name</label>
+                <input 
+                  type="text" 
+                  value={editForm.shs_name || ""} 
+                  onChange={e => setEditForm({...editForm, shs_name: e.target.value})}
+                  className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow"
+                />
+              </div>
+            </div>
+            
+            <div className="p-6 border-t border-neutral-200 dark:border-neutral-800 flex justify-end gap-3 bg-neutral-50 dark:bg-neutral-900 rounded-b-2xl flex-shrink-0">
+              <button 
+                onClick={() => setEditingId(null)}
+                className="px-5 py-2.5 text-sm font-medium text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 hover:bg-neutral-200/50 dark:hover:bg-neutral-800 rounded-xl transition-colors"
+                type="button"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={saveEdit}
+                className="px-5 py-2.5 text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 rounded-xl shadow-sm transition-colors"
+                type="button"
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
