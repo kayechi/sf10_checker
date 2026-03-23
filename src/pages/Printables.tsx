@@ -129,6 +129,8 @@ export default function Printables() {
       table { width: 100%; border-collapse: collapse; font-size: 10pt; }
       th, td { border: 1px solid #111; padding: 5px 8px; }
       th { background-color: #b2e05c; font-weight: bold; text-align: center; white-space: nowrap; }
+      .text-center { text-align: center; }
+      .uppercase { text-transform: uppercase; }
     `;
 
     // Build sections with Word-native page breaks between them
