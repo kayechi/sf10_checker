@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { api, DashboardStats, Student } from "../lib/api";
 import { Printer, Download, ChevronDown, FileText, ImageIcon, CheckCircle } from "lucide-react";
-import html2canvas from "html2canvas";
+import * as htmlToImage from "html-to-image";
 
 export default function Printables() {
   const [sf10Option, setSf10Option] = useState<string>("passed");
@@ -265,18 +265,15 @@ export default function Printables() {
         wrapper.appendChild(clone);
         document.body.appendChild(wrapper);
 
-        const canvas = await html2canvas(wrapper, {
+        // html-to-image usually works better than html2canvas in Tauri/WebView
+        const dataUrl = await htmlToImage.toPng(wrapper, {
           backgroundColor: "#ffffff",
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          logging: false,
           width: A4_WIDTH_PX,
+          pixelRatio: 2,
         });
 
         document.body.removeChild(wrapper);
 
-        const dataUrl = canvas.toDataURL("image/png");
         const a = document.createElement("a");
         a.href = dataUrl;
         a.download = filename;
