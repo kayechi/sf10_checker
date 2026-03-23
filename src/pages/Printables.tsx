@@ -1,21 +1,33 @@
 import { useState, useEffect, useRef } from "react";
 import { api, DashboardStats, Student } from "../lib/api";
-import { Printer } from "lucide-react";
+import { Printer, Download, ChevronDown, FileText, ImageIcon, CheckCircle } from "lucide-react";
+import html2canvas from "html2canvas";
 
 export default function Printables() {
   const [sf10Option, setSf10Option] = useState<string>("passed");
   const [yearOption, setYearOption] = useState<number | undefined>(undefined);
   const [semester, setSemester] = useState<string>("SECOND SEMESTER");
   const [academicYear, setAcademicYear] = useState<string>("2025-2026");
-  
+
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [selectedPrograms, setSelectedPrograms] = useState<Set<string>>(new Set());
-  
+
   const [previewData, setPreviewData] = useState<Student[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [years, setYears] = useState<number[]>([]);
+  const [saveAsOpen, setSaveAsOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
 
   const printRef = useRef<HTMLDivElement>(null);
+  const saveAsRef = useRef<HTMLDivElement>(null);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = (message: string) => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    setToast(message);
+    toastTimerRef.current = setTimeout(() => setToast(null), 3000);
+  };
 
   useEffect(() => {
     api.getDashboardStats(yearOption).then(setStats).catch(console.error);
@@ -23,6 +35,17 @@ export default function Printables() {
 
   useEffect(() => {
     api.getFilterOptions().then(res => setYears(res.years)).catch(console.error);
+  }, []);
+
+  // Close save-as dropdown when clicking outside
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (saveAsRef.current && !saveAsRef.current.contains(e.target as Node)) {
+        setSaveAsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   const toggleProgram = (program: string) => {
@@ -49,28 +72,22 @@ export default function Printables() {
   const handlePrint = () => {
     if (!printRef.current) return;
 
-    // Clone the printable content into a temporary portal div
     const portalId = "__print_portal__";
     const styleId = "__print_style__";
 
-    // Remove any stale portals
     document.getElementById(portalId)?.remove();
     document.getElementById(styleId)?.remove();
 
-    // Create a portal with just the print content
     const portal = document.createElement("div");
     portal.id = portalId;
     portal.innerHTML = printRef.current.innerHTML;
     portal.style.display = "none";
     document.body.appendChild(portal);
 
-    // Inject a print stylesheet that hides everything except the portal
     const style = document.createElement("style");
     style.id = styleId;
     style.innerHTML = `
-      @page {
-        margin: 0;
-      }
+      @page { size: A4; margin: 0.5in; }
       @media print {
         body > *:not(#${portalId}) { display: none !important; }
         #${portalId} {
@@ -78,14 +95,9 @@ export default function Printables() {
           font-family: Arial, sans-serif;
           color: #000;
           background: #fff;
-          padding: 15mm 18mm;
         }
-        #${portalId} .print-section {
-          page-break-after: always;
-        }
-        #${portalId} .print-section:last-child {
-          page-break-after: avoid;
-        }
+        #${portalId} .print-section { page-break-after: always; }
+        #${portalId} .print-section:last-child { page-break-after: avoid; }
         #${portalId} .text-center { text-align: center; }
         #${portalId} .mb-8 { margin-bottom: 2rem; }
         #${portalId} .mb-6 { margin-bottom: 1.5rem; }
@@ -100,33 +112,174 @@ export default function Printables() {
           background-color: #b2e05c !important;
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
-          color: #000;
-          font-weight: 700;
-          text-align: center;
+          color: #000; font-weight: 700; text-align: center;
         }
         #${portalId} .total-count {
-          margin-top: 0.75rem;
-          text-align: right;
-          font-size: 0.78rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          color: #555;
+          margin-top: 0.75rem; text-align: right; font-size: 0.78rem;
+          font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #555;
         }
       }
     `;
     document.head.appendChild(style);
-
-    // Trigger native print dialog
     window.print();
-
-    // Clean up after printing (or if dialog is cancelled)
     const cleanup = () => {
       document.getElementById(portalId)?.remove();
       document.getElementById(styleId)?.remove();
       window.removeEventListener("afterprint", cleanup);
     };
     window.addEventListener("afterprint", cleanup);
+  };
+
+  // ---- Save As: Word (.doc) ----
+  const handleSaveAsWord = () => {
+    if (!printRef.current) return;
+    setSaveAsOpen(false);
+
+    // A4 Word page layout: 11906 twips wide, 16838 twips tall, 720 twip (0.5in) margins
+    const pageXml = `<w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="720" w:right="720" w:bottom="720" w:left="720"/>`;
+
+    const tableStyles = `
+      body { font-family: Arial, sans-serif; color: #000; margin: 0; }
+      .print-section { mso-element: para-border-div; page-break-after: always; padding: 0; }
+      .print-section:last-child { page-break-after: avoid; }
+      h1 { font-size: 18pt; font-weight: bold; text-align: center; text-transform: uppercase; letter-spacing: 2pt; margin-bottom: 12pt; }
+      h2 { font-size: 13pt; font-weight: bold; text-align: center; text-transform: uppercase; }
+      h3 { font-size: 12pt; font-weight: bold; text-align: center; text-transform: uppercase; margin-top: 4pt; }
+      .mb-8 { margin-bottom: 24pt; }
+      table { width: 100%; border-collapse: collapse; font-size: 10pt; }
+      th, td { border: 1px solid #111; padding: 5px 8px; }
+      th { background-color: #b2e05c; font-weight: bold; text-align: center; white-space: nowrap; }
+      .total-count { text-align: right; font-size: 9pt; font-weight: bold; text-transform: uppercase; margin-top: 8pt; color: #555; }
+    `;
+
+    const html = `
+      <html xmlns:o="urn:schemas-microsoft-com:office:office"
+            xmlns:w="urn:schemas-microsoft-com:office:word"
+            xmlns="http://www.w3.org/TR/REC-html40">
+        <head>
+          <meta charset="utf-8"/>
+          <meta name=ProgId content=Word.Document>
+          <title>Report</title>
+          <style>
+            ${tableStyles}
+            @page WordSection1 { size: 21cm 29.7cm; margin: 1.27cm; mso-page-orientation: portrait; }
+            div.WordSection1 { page: WordSection1; }
+          </style>
+          <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
+          <!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+          <!--[if gte mso 9]><xml><w:WordDocument>${pageXml}</w:WordDocument></xml><![endif]-->
+        </head>
+        <body>
+          <div class="WordSection1">${printRef.current.innerHTML}</div>
+        </body>
+      </html>
+    `;
+
+    const blob = new Blob([html], { type: "application/msword" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    const filename = `report_${yearOption || "all"}_${semester.replace(/ /g, "_")}.doc`;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast(`Saved: ${filename}`);
+  };
+
+  // ---- Save As: Images (PNG via html2canvas) ----
+  // A4 at 96 DPI = 794 x 1123px. We render at 2x for sharpness.
+  const A4_WIDTH_PX = 794;
+  const A4_PADDING_PX = 48; // ~0.5in at 96dpi
+
+  const handleSaveAsImages = async () => {
+    if (!printRef.current) return;
+    setSaveAsOpen(false);
+    setIsSaving(true);
+
+    try {
+      const sections = printRef.current.querySelectorAll<HTMLElement>(".print-section");
+      const sectionArray = Array.from(sections);
+
+      for (let i = 0; i < sectionArray.length; i++) {
+        const section = sectionArray[i];
+        const programEl = section.querySelector("h1");
+        const programName = (programEl?.textContent || "UNKNOWN").trim().replace(/\s+/g, "-");
+        const batchYear = yearOption || "ALL";
+        const filename = `BATCH${batchYear}_${programName}_PAGE${i + 1}.png`;
+
+        // Clone section into a fresh off-screen div at A4 width so html2canvas
+        // can render it outside the scrollable preview container
+        const wrapper = document.createElement("div");
+        wrapper.style.cssText = [
+          "position:fixed",
+          "top:-9999px",
+          "left:0",
+          `width:${A4_WIDTH_PX}px`,
+          "background:#fff",
+          "color:#000",
+          "font-family:Arial,sans-serif",
+          `padding:${A4_PADDING_PX}px`,
+          "box-sizing:border-box",
+          "z-index:-1",
+        ].join(";");
+
+        // Copy the section HTML and apply inline styles for table rendering
+        const clone = section.cloneNode(true) as HTMLElement;
+        // Ensure the dashed border divider isn't captured
+        clone.style.borderTop = "none";
+        clone.style.paddingTop = "0";
+
+        // Fix table header background (Tauri WebView may strip computed colours)
+        const theadRows = clone.querySelectorAll<HTMLElement>("thead tr");
+        theadRows.forEach(tr => {
+          tr.style.backgroundColor = "#b2e05c";
+          tr.style.color = "#000";
+        });
+        const ths = clone.querySelectorAll<HTMLElement>("th, td");
+        ths.forEach(el => {
+          el.style.border = "1px solid #111";
+          el.style.padding = "6px 10px";
+          el.style.whiteSpace = el.tagName === "TH" ? "nowrap" : "normal";
+        });
+        const table = clone.querySelector<HTMLElement>("table");
+        if (table) {
+          table.style.width = "100%";
+          table.style.borderCollapse = "collapse";
+          table.style.fontSize = "0.82rem";
+        }
+
+        wrapper.appendChild(clone);
+        document.body.appendChild(wrapper);
+
+        const canvas = await html2canvas(wrapper, {
+          backgroundColor: "#ffffff",
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          width: A4_WIDTH_PX,
+        });
+
+        document.body.removeChild(wrapper);
+
+        const dataUrl = canvas.toDataURL("image/png");
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        await new Promise(r => setTimeout(r, 400));
+      }
+
+      showToast(`Saved ${sectionArray.length} image${sectionArray.length !== 1 ? "s" : ""} successfully`);
+    } catch (err) {
+      console.error("Image export failed:", err);
+      showToast("Export failed — check console");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const groupedData = previewData.reduce((acc, student) => {
@@ -144,26 +297,75 @@ export default function Printables() {
 
   return (
     <div className="space-y-6 h-full flex flex-col">
+      {/* Toast notification */}
+      {toast && (
+        <div className="fixed top-5 right-5 z-[999] flex items-center gap-3 px-5 py-3.5 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-2xl shadow-xl font-semibold text-sm max-w-xs" style={{ animation: "slideInToast 0.25s ease" }}>
+          <CheckCircle className="w-5 h-5 text-green-400 dark:text-green-600 flex-shrink-0" />
+          <span>{toast}</span>
+        </div>
+      )}
+
       <div className="flex items-center justify-between">
+
         <h2 className="text-2xl font-bold tracking-tight">Printables</h2>
-        <button 
-          onClick={handlePrint}
-          disabled={previewData.length === 0}
-          className="flex items-center gap-2 px-5 py-2.5 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-xl shadow-md hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-all"
-        >
-          <Printer className="w-5 h-5" />
-          Print Report
-        </button>
+
+        <div className="flex items-center gap-3">
+          {/* Save As dropdown */}
+          <div className="relative" ref={saveAsRef}>
+            <button
+              onClick={() => setSaveAsOpen(o => !o)}
+              disabled={previewData.length === 0 || isSaving}
+              className="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 rounded-xl shadow-sm hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-all"
+            >
+              <Download className="w-4 h-4" />
+              {isSaving ? "Saving..." : "Save As"}
+              <ChevronDown className={`w-4 h-4 transition-transform ${saveAsOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {saveAsOpen && (
+              <div className="absolute right-0 top-full mt-2 w-52 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-xl shadow-lg overflow-hidden z-50">
+                <button
+                  onClick={handleSaveAsWord}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors text-left"
+                >
+                  <FileText className="w-4 h-4 text-blue-500" />
+                  Word Document (.doc)
+                </button>
+                <div className="border-t border-neutral-100 dark:border-neutral-800" />
+                <button
+                  onClick={handleSaveAsImages}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors text-left"
+                >
+                  <ImageIcon className="w-4 h-4 text-green-500" />
+                  <div>
+                    <div>Images (.png)</div>
+                    <div className="text-xs text-neutral-400 font-normal">BATCH_COURSE-CODE_PAGE#</div>
+                  </div>
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Print button */}
+          <button
+            onClick={handlePrint}
+            disabled={previewData.length === 0}
+            className="flex items-center gap-2 px-5 py-2.5 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-xl shadow-md hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-all"
+          >
+            <Printer className="w-5 h-5" />
+            Print Report
+          </button>
+        </div>
       </div>
 
       <div className="flex-1 flex gap-6 h-[calc(100vh-8rem)]">
         {/* Left: Configuration */}
         <div className="w-80 flex-shrink-0 flex flex-col gap-6 p-6 bg-white dark:bg-neutral-950 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 overflow-y-auto">
           <h3 className="font-bold text-lg border-b border-neutral-100 dark:border-neutral-800 pb-3">Configuration</h3>
-          
+
           <div className="space-y-2">
             <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">SF10 Status</label>
-            <select 
+            <select
               value={sf10Option}
               onChange={(e) => setSf10Option(e.target.value)}
               className="w-full px-4 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 focus:outline-none focus:ring-2 focus:ring-primary-500 font-medium"
@@ -175,7 +377,7 @@ export default function Printables() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">Year Enrolled</label>
-            <select 
+            <select
               value={yearOption || ""}
               onChange={(e) => setYearOption(e.target.value ? Number(e.target.value) : undefined)}
               className="w-full px-4 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 focus:outline-none focus:ring-2 focus:ring-primary-500 font-medium"
@@ -187,20 +389,20 @@ export default function Printables() {
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">Semester</label>
-            <select 
+            <select
               value={semester}
               onChange={(e) => setSemester(e.target.value)}
               className="w-full px-4 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 focus:outline-none focus:ring-2 focus:ring-primary-500 font-medium"
             >
               <option value="FIRST SEMESTER">First Semester</option>
               <option value="SECOND SEMESTER">Second Semester</option>
-              <option value="SUMMER">Summer</option>
+              <option value="MID-YEAR">Mid-Year</option>
             </select>
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">Academic Year</label>
-            <input 
+            <input
               type="text"
               value={academicYear}
               onChange={(e) => setAcademicYear(e.target.value)}
@@ -216,8 +418,8 @@ export default function Printables() {
                 programsWithCounts.length > 0 ? (
                   programsWithCounts.map(p => (
                     <label key={p.program} className="flex items-center gap-3 p-3 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-900 cursor-pointer border border-transparent hover:border-neutral-200 dark:hover:border-neutral-800 transition-colors">
-                      <input 
-                        type="checkbox" 
+                      <input
+                        type="checkbox"
                         checked={selectedPrograms.has(p.program)}
                         onChange={() => toggleProgram(p.program)}
                         className="w-4 h-4 rounded border-gray-300 text-neutral-900 focus:ring-neutral-900 dark:focus:ring-white"
@@ -237,7 +439,7 @@ export default function Printables() {
             </div>
           </div>
 
-          <button 
+          <button
             onClick={handleGenerate}
             disabled={isGenerating || selectedPrograms.size === 0}
             className="w-full py-3.5 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl shadow-md focus:ring-4 focus:ring-primary-600/20 disabled:opacity-50 transition-all uppercase tracking-wide text-sm"
@@ -254,7 +456,6 @@ export default function Printables() {
               <p className="font-medium text-lg text-neutral-500 dark:text-neutral-400">Configure options and generate preview</p>
             </div>
           ) : (
-            /* printRef captures only this content for the isolated print window */
             <div ref={printRef} className="p-10 space-y-12">
               {Object.entries(groupedData).map(([program, students], idx) => (
                 <div key={program} className={`print-section ${idx > 0 ? "pt-12 border-t-2 border-dashed border-neutral-200 dark:border-neutral-800" : ""}`}>
@@ -270,13 +471,13 @@ export default function Printables() {
                   <h1 className="text-2xl font-black uppercase text-center tracking-widest text-neutral-900 dark:text-white mb-6">
                     {program}
                   </h1>
-                  
+
                   <table className="w-full text-left border-collapse border border-neutral-900 dark:border-neutral-500">
                     <thead>
                       <tr className="bg-[#b2e05c] text-black" style={{ WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' } as React.CSSProperties}>
-                        <th className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center w-1/3">FULL NAME</th>
-                        <th className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center w-1/6">COURSE CODE</th>
-                        <th className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center w-1/2">SCHOOL</th>
+                        <th className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center w-1/3 whitespace-nowrap">FULL NAME</th>
+                        <th className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center w-1/6 whitespace-nowrap">COURSE CODE</th>
+                        <th className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center w-1/2 whitespace-nowrap">SCHOOL</th>
                       </tr>
                     </thead>
                     <tbody>
