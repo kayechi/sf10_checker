@@ -73,7 +73,7 @@ export default function Printables() {
     const style = document.createElement("style");
     style.id = styleId;
     style.innerHTML = `
-      @page { size: A4; margin: 0.5in; }
+      @page { size: A4; margin: 0.0; }
       @media print {
         body > *:not(#${portalId}) { display: none !important; }
         #${portalId} {
@@ -81,7 +81,7 @@ export default function Printables() {
           font-family: Arial, sans-serif;
           color: #000;
           background: #fff;
-          padding: 0;
+          padding: 0.5in;
         }
         #${portalId} .print-section { page-break-after: always; }
         #${portalId} .print-section:last-child { page-break-after: avoid; }
