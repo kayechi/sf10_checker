@@ -141,8 +141,6 @@ export default function Printables() {
 
     const tableStyles = `
       body { font-family: Arial, sans-serif; color: #000; margin: 0; }
-      .print-section { mso-element: para-border-div; page-break-after: always; padding: 0; }
-      .print-section:last-child { page-break-after: avoid; }
       h1 { font-size: 18pt; font-weight: bold; text-align: center; text-transform: uppercase; letter-spacing: 2pt; margin-bottom: 12pt; }
       h2 { font-size: 13pt; font-weight: bold; text-align: center; text-transform: uppercase; }
       h3 { font-size: 12pt; font-weight: bold; text-align: center; text-transform: uppercase; margin-top: 4pt; }
@@ -152,6 +150,21 @@ export default function Printables() {
       th { background-color: #b2e05c; font-weight: bold; text-align: center; white-space: nowrap; }
       .total-count { text-align: right; font-size: 9pt; font-weight: bold; text-transform: uppercase; margin-top: 8pt; color: #555; }
     `;
+
+    // Build sections with Word-native page breaks between them
+    const wordPageBreak = `<br style="mso-break-type:page-break" clear="all"/>`;
+    const sections = Array.from(
+      printRef.current.querySelectorAll<HTMLElement>(".print-section")
+    );
+    const sectionsHtml = sections
+      .map(s => {
+        // Clone and strip the preview-only dashed divider classes
+        const clone = s.cloneNode(true) as HTMLElement;
+        clone.style.borderTop = "none";
+        clone.style.paddingTop = "0";
+        return `<div>${clone.innerHTML}</div>`;
+      })
+      .join(wordPageBreak);
 
     const html = `
       <html xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -171,7 +184,7 @@ export default function Printables() {
           <!--[if gte mso 9]><xml><w:WordDocument>${pageXml}</w:WordDocument></xml><![endif]-->
         </head>
         <body>
-          <div class="WordSection1">${printRef.current.innerHTML}</div>
+          <div class="WordSection1">${sectionsHtml}</div>
         </body>
       </html>
     `;
