@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { api, DashboardStats, Student } from "../lib/api";
-import { Printer, Download, ChevronDown, FileText, ImageIcon, CheckCircle } from "lucide-react";
-import * as htmlToImage from "html-to-image";
+import { Printer, FileText, CheckCircle } from "lucide-react";
 
 export default function Printables() {
   const [sf10Option, setSf10Option] = useState<string>("passed");
@@ -15,12 +14,9 @@ export default function Printables() {
   const [previewData, setPreviewData] = useState<Student[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [years, setYears] = useState<number[]>([]);
-  const [saveAsOpen, setSaveAsOpen] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
   const printRef = useRef<HTMLDivElement>(null);
-  const saveAsRef = useRef<HTMLDivElement>(null);
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const showToast = (message: string) => {
@@ -37,16 +33,6 @@ export default function Printables() {
     api.getFilterOptions().then(res => setYears(res.years)).catch(console.error);
   }, []);
 
-  // Close save-as dropdown when clicking outside
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (saveAsRef.current && !saveAsRef.current.contains(e.target as Node)) {
-        setSaveAsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
 
   const toggleProgram = (program: string) => {
     const newSet = new Set(selectedPrograms);
@@ -115,10 +101,6 @@ export default function Printables() {
           print-color-adjust: exact;
           color: #000; font-weight: 700; text-align: center;
         }
-        #${portalId} .total-count {
-          margin-top: 0.75rem; text-align: right; font-size: 0.78rem;
-          font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #555;
-        }
       }
     `;
     document.head.appendChild(style);
@@ -134,7 +116,6 @@ export default function Printables() {
   // ---- Save As: Word (.doc) ----
   const handleSaveAsWord = () => {
     if (!printRef.current) return;
-    setSaveAsOpen(false);
 
     // A4 Word page layout: 11906 twips wide, 16838 twips tall, 720 twip (0.5in) margins
     const pageXml = `<w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="720" w:right="720" w:bottom="720" w:left="720"/>`;
@@ -148,7 +129,6 @@ export default function Printables() {
       table { width: 100%; border-collapse: collapse; font-size: 10pt; }
       th, td { border: 1px solid #111; padding: 5px 8px; }
       th { background-color: #b2e05c; font-weight: bold; text-align: center; white-space: nowrap; }
-      .total-count { text-align: right; font-size: 9pt; font-weight: bold; text-transform: uppercase; margin-top: 8pt; color: #555; }
     `;
 
     // Build sections with Word-native page breaks between them
@@ -200,108 +180,6 @@ export default function Printables() {
     showToast(`Saved: ${filename}`);
   };
 
-  // ---- Save As: Images (PNG via html2canvas) ----
-  // A4 at 96 DPI = 794 x 1123px. We render at 2x for sharpness.
-  const A4_WIDTH_PX = 794;
-  const A4_PADDING_PX = 48; // ~0.5in at 96dpi
-
-  const handleSaveAsImages = async () => {
-    if (!printRef.current) return;
-    setSaveAsOpen(false);
-    setIsSaving(true);
-
-    try {
-      const sections = printRef.current.querySelectorAll<HTMLElement>(".print-section");
-      const sectionArray = Array.from(sections);
-
-      for (let i = 0; i < sectionArray.length; i++) {
-        const section = sectionArray[i];
-        const programEl = section.querySelector("h1");
-        const programName = (programEl?.textContent || "UNKNOWN").trim().replace(/\s+/g, "-");
-        const batchYear = yearOption || "ALL";
-        const filename = `BATCH${batchYear}_${programName}_PAGE${i + 1}.png`;
-
-        // Clone section into a fresh off-screen div at A4 width so html2canvas
-        // can render it outside the scrollable preview container
-        const wrapper = document.createElement("div");
-        wrapper.style.cssText = `
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: ${A4_WIDTH_PX}px;
-          background: #fff;
-          color: #000;
-          font-family: Arial, sans-serif;
-          padding: ${A4_PADDING_PX}px;
-          box-sizing: border-box;
-          z-index: -1;
-          opacity: 0.01;
-          pointer-events: none;
-        `;
-
-        // Copy the section HTML and apply inline styles for table rendering
-        const clone = section.cloneNode(true) as HTMLElement;
-        // Ensure the dashed border divider isn't captured
-        clone.style.borderTop = "none";
-        clone.style.paddingTop = "0";
-
-        // Fix table header background (Tauri WebView may strip computed colours)
-        const theadRows = clone.querySelectorAll<HTMLElement>("thead tr");
-        theadRows.forEach(tr => {
-          tr.style.backgroundColor = "#b2e05c";
-          tr.style.color = "#000";
-        });
-        const ths = clone.querySelectorAll<HTMLElement>("th, td");
-        ths.forEach(el => {
-          el.style.border = "1px solid #111";
-          el.style.padding = "6px 10px";
-          el.style.whiteSpace = el.tagName === "TH" ? "nowrap" : "normal";
-        });
-        const table = clone.querySelector<HTMLElement>("table");
-        if (table) {
-          table.style.width = "100%";
-          table.style.borderCollapse = "collapse";
-          table.style.fontSize = "0.82rem";
-        }
-
-        wrapper.appendChild(clone);
-        document.body.appendChild(wrapper);
-
-        // Wait significantly for the WebView to paint the cloned element
-        await new Promise(r => setTimeout(r, 800));
-
-        // html-to-image "double-render" trick: The first call triggers font/asset
-        // loading internally, the second call captures the actual content.
-        try {
-          await htmlToImage.toBlob(wrapper);
-          const dataUrl = await htmlToImage.toPng(wrapper, {
-            backgroundColor: "#ffffff",
-            width: A4_WIDTH_PX,
-            pixelRatio: 2,
-            cacheBust: true,
-          });
-
-          const a = document.createElement("a");
-          a.href = dataUrl;
-          a.download = filename;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-        } finally {
-          document.body.removeChild(wrapper);
-        }
-
-        await new Promise(r => setTimeout(r, 400));
-      }
-
-      showToast(`Saved ${sectionArray.length} image${sectionArray.length !== 1 ? "s" : ""} successfully`);
-    } catch (err) {
-      console.error("Image export failed:", err);
-      showToast("Export failed — check console");
-    } finally {
-      setIsSaving(false);
-    }
-  };
 
   const groupedData = previewData.reduce((acc, student) => {
     if (!acc[student.program]) acc[student.program] = [];
@@ -331,41 +209,15 @@ export default function Printables() {
         <h2 className="text-2xl font-bold tracking-tight">Printables</h2>
 
         <div className="flex items-center gap-3">
-          {/* Save As dropdown */}
-          <div className="relative" ref={saveAsRef}>
-            <button
-              onClick={() => setSaveAsOpen(o => !o)}
-              disabled={previewData.length === 0 || isSaving}
-              className="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 rounded-xl shadow-sm hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-all"
-            >
-              <Download className="w-4 h-4" />
-              {isSaving ? "Saving..." : "Save As"}
-              <ChevronDown className={`w-4 h-4 transition-transform ${saveAsOpen ? "rotate-180" : ""}`} />
-            </button>
-
-            {saveAsOpen && (
-              <div className="absolute right-0 top-full mt-2 w-52 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-xl shadow-lg overflow-hidden z-50">
-                <button
-                  onClick={handleSaveAsWord}
-                  className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors text-left"
-                >
-                  <FileText className="w-4 h-4 text-blue-500" />
-                  Word Document (.doc)
-                </button>
-                <div className="border-t border-neutral-100 dark:border-neutral-800" />
-                <button
-                  onClick={handleSaveAsImages}
-                  className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors text-left"
-                >
-                  <ImageIcon className="w-4 h-4 text-green-500" />
-                  <div>
-                    <div>Images (.png)</div>
-                    <div className="text-xs text-neutral-400 font-normal">BATCH_COURSE-CODE_PAGE#</div>
-                  </div>
-                </button>
-              </div>
-            )}
-          </div>
+          {/* Save as Word button */}
+          <button
+            onClick={handleSaveAsWord}
+            disabled={previewData.length === 0}
+            className="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 rounded-xl shadow-sm hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-all"
+          >
+            <FileText className="w-4 h-4 text-blue-500" />
+            Save as Word
+          </button>
 
           {/* Print button */}
           <button
@@ -517,9 +369,6 @@ export default function Printables() {
                       ))}
                     </tbody>
                   </table>
-                  <div className="total-count mt-4 text-right text-sm font-bold text-neutral-500 uppercase tracking-widest">
-                    Total count: {students.length}
-                  </div>
                 </div>
               ))}
             </div>
