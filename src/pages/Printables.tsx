@@ -224,18 +224,20 @@ export default function Printables() {
         // Clone section into a fresh off-screen div at A4 width so html2canvas
         // can render it outside the scrollable preview container
         const wrapper = document.createElement("div");
-        wrapper.style.cssText = [
-          "position:fixed",
-          "top:-9999px",
-          "left:0",
-          `width:${A4_WIDTH_PX}px`,
-          "background:#fff",
-          "color:#000",
-          "font-family:Arial,sans-serif",
-          `padding:${A4_PADDING_PX}px`,
-          "box-sizing:border-box",
-          "z-index:-1",
-        ].join(";");
+        wrapper.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: ${A4_WIDTH_PX}px;
+          background: #fff;
+          color: #000;
+          font-family: Arial, sans-serif;
+          padding: ${A4_PADDING_PX}px;
+          box-sizing: border-box;
+          z-index: -1;
+          opacity: 0.01;
+          pointer-events: none;
+        `;
 
         // Copy the section HTML and apply inline styles for table rendering
         const clone = section.cloneNode(true) as HTMLElement;
@@ -265,21 +267,29 @@ export default function Printables() {
         wrapper.appendChild(clone);
         document.body.appendChild(wrapper);
 
-        // html-to-image usually works better than html2canvas in Tauri/WebView
-        const dataUrl = await htmlToImage.toPng(wrapper, {
-          backgroundColor: "#ffffff",
-          width: A4_WIDTH_PX,
-          pixelRatio: 2,
-        });
+        // Wait significantly for the WebView to paint the cloned element
+        await new Promise(r => setTimeout(r, 800));
 
-        document.body.removeChild(wrapper);
+        // html-to-image "double-render" trick: The first call triggers font/asset
+        // loading internally, the second call captures the actual content.
+        try {
+          await htmlToImage.toBlob(wrapper);
+          const dataUrl = await htmlToImage.toPng(wrapper, {
+            backgroundColor: "#ffffff",
+            width: A4_WIDTH_PX,
+            pixelRatio: 2,
+            cacheBust: true,
+          });
 
-        const a = document.createElement("a");
-        a.href = dataUrl;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+          const a = document.createElement("a");
+          a.href = dataUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        } finally {
+          document.body.removeChild(wrapper);
+        }
 
         await new Promise(r => setTimeout(r, 400));
       }
