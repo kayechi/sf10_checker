@@ -49,83 +49,80 @@ export default function Printables() {
   const handlePrint = () => {
     if (!printRef.current) return;
 
-    const printContent = printRef.current.innerHTML;
-    const printWindow = window.open("", "_blank", "width=900,height=700");
-    if (!printWindow) return;
+    // Clone the printable content into a temporary portal div
+    const portalId = "__print_portal__";
+    const styleId = "__print_style__";
 
-    printWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="utf-8" />
-          <title>Print Report</title>
-          <style>
-            * { box-sizing: border-box; margin: 0; padding: 0; }
-            body {
-              font-family: Arial, sans-serif;
-              color: #000;
-              background: #fff;
-              padding: 0;
-            }
-            .print-section {
-              padding: 40px;
-              page-break-after: always;
-            }
-            .print-section:last-child {
-              page-break-after: avoid;
-            }
-            .text-center { text-align: center; }
-            .mb-8 { margin-bottom: 2rem; }
-            .mb-6 { margin-bottom: 1.5rem; }
-            .mt-4 { margin-top: 1rem; }
-            h1 { font-size: 1.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; }
-            h2 { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; line-height: 1.4; }
-            h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; margin-top: 0.25rem; }
-            table {
-              width: 100%;
-              border-collapse: collapse;
-              font-size: 0.82rem;
-            }
-            th, td {
-              border: 1px solid #111;
-              padding: 6px 10px;
-            }
-            thead tr {
-              background-color: #b2e05c !important;
-              -webkit-print-color-adjust: exact;
-              print-color-adjust: exact;
-              color: #000;
-              font-weight: 700;
-              text-align: center;
-            }
-            .total-count {
-              margin-top: 0.75rem;
-              text-align: right;
-              font-size: 0.78rem;
-              font-weight: 700;
-              text-transform: uppercase;
-              letter-spacing: 0.1em;
-              color: #555;
-            }
-            @media print {
-              body { padding: 0; }
-              .print-section { padding: 20px 32px; }
-            }
-          </style>
-        </head>
-        <body>
-          ${printContent}
-          <script>
-            window.onload = function() {
-              window.focus();
-              window.print();
-              window.onafterprint = function() { window.close(); };
-            };
-          <\/script>
-        </body>
-      </html>
-    `);
-    printWindow.document.close();
+    // Remove any stale portals
+    document.getElementById(portalId)?.remove();
+    document.getElementById(styleId)?.remove();
+
+    // Create a portal with just the print content
+    const portal = document.createElement("div");
+    portal.id = portalId;
+    portal.innerHTML = printRef.current.innerHTML;
+    portal.style.display = "none";
+    document.body.appendChild(portal);
+
+    // Inject a print stylesheet that hides everything except the portal
+    const style = document.createElement("style");
+    style.id = styleId;
+    style.innerHTML = `
+      @media print {
+        body > *:not(#${portalId}) { display: none !important; }
+        #${portalId} {
+          display: block !important;
+          font-family: Arial, sans-serif;
+          color: #000;
+          background: #fff;
+        }
+        #${portalId} .print-section {
+          padding: 20px 32px;
+          page-break-after: always;
+        }
+        #${portalId} .print-section:last-child {
+          page-break-after: avoid;
+        }
+        #${portalId} .text-center { text-align: center; }
+        #${portalId} .mb-8 { margin-bottom: 2rem; }
+        #${portalId} .mb-6 { margin-bottom: 1.5rem; }
+        #${portalId} .mt-4 { margin-top: 1rem; }
+        #${portalId} h1 { font-size: 1.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; text-align: center; }
+        #${portalId} h2 { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; line-height: 1.4; text-align: center; }
+        #${portalId} h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; margin-top: 0.25rem; text-align: center; }
+        #${portalId} table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+        #${portalId} th, #${portalId} td { border: 1px solid #111; padding: 6px 10px; }
+        #${portalId} thead tr {
+          background-color: #b2e05c !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+          color: #000;
+          font-weight: 700;
+          text-align: center;
+        }
+        #${portalId} .total-count {
+          margin-top: 0.75rem;
+          text-align: right;
+          font-size: 0.78rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: #555;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Trigger native print dialog
+    window.print();
+
+    // Clean up after printing (or if dialog is cancelled)
+    const cleanup = () => {
+      document.getElementById(portalId)?.remove();
+      document.getElementById(styleId)?.remove();
+      window.removeEventListener("afterprint", cleanup);
+    };
+    window.addEventListener("afterprint", cleanup);
   };
 
   const groupedData = previewData.reduce((acc, student) => {
