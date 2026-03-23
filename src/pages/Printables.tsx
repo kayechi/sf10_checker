@@ -68,6 +68,9 @@ export default function Printables() {
     const style = document.createElement("style");
     style.id = styleId;
     style.innerHTML = `
+      @page {
+        margin: 0;
+      }
       @media print {
         body > *:not(#${portalId}) { display: none !important; }
         #${portalId} {
@@ -75,9 +78,9 @@ export default function Printables() {
           font-family: Arial, sans-serif;
           color: #000;
           background: #fff;
+          padding: 15mm 18mm;
         }
         #${portalId} .print-section {
-          padding: 20px 32px;
           page-break-after: always;
         }
         #${portalId} .print-section:last-child {
@@ -92,6 +95,7 @@ export default function Printables() {
         #${portalId} h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; margin-top: 0.25rem; text-align: center; }
         #${portalId} table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
         #${portalId} th, #${portalId} td { border: 1px solid #111; padding: 6px 10px; }
+        #${portalId} th { white-space: nowrap; }
         #${portalId} thead tr {
           background-color: #b2e05c !important;
           -webkit-print-color-adjust: exact;
