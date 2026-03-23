@@ -73,7 +73,7 @@ export default function Printables() {
     const style = document.createElement("style");
     style.id = styleId;
     style.innerHTML = `
-      @page { size: A4; margin: 0; }
+      @page { size: A4; margin: 0.0; }
       @media print {
         body > *:not(#${portalId}) { display: none !important; }
         #${portalId} {
