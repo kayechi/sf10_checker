@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import Tables from "./pages/Tables";
@@ -8,6 +9,11 @@ import Logs from "./pages/Logs";
 import "./App.css";
 
 function App() {
+  useEffect(() => {
+    // Clear all localStorage on app startup
+    localStorage.clear();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>

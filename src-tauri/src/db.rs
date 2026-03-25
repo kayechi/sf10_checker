@@ -28,14 +28,19 @@ pub mod db {
                 year_enrolled INTEGER NOT NULL,
                 shs_name TEXT COLLATE NOCASE,
                 status_passed_sf10 INTEGER NOT NULL DEFAULT 0,
+                enrolled_or_not_enrolled INTEGER NOT NULL DEFAULT 1,
                 import_batch_id INTEGER
             )",
             [],
         )?;
 
-        // Ensure the column exists for existing databases
+        // Ensure the columns exist for existing databases
         let _ = conn.execute(
             "ALTER TABLE students ADD COLUMN import_batch_id INTEGER",
+            [],
+        );
+        let _ = conn.execute(
+            "ALTER TABLE students ADD COLUMN enrolled_or_not_enrolled INTEGER NOT NULL DEFAULT 1",
             [],
         );
 

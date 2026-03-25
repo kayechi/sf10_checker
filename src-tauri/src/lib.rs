@@ -1,5 +1,5 @@
-mod db;
 mod commands;
+mod db;
 
 use std::sync::Mutex;
 use tauri::Manager;
@@ -18,6 +18,7 @@ pub fn run() {
             commands::commands::get_filter_options,
             commands::commands::update_student,
             commands::commands::toggle_sf10,
+            commands::commands::toggle_enrolled,
             commands::commands::get_dashboard_stats,
             commands::commands::get_printable_students,
             commands::commands::import_students,
