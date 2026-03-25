@@ -138,34 +138,66 @@ export default function Printables() {
     const style = document.createElement("style");
     style.id = styleId;
     style.innerHTML = `
-      @page { size: A4; margin: 0; }
+      @page { 
+        size: A4; 
+        margin: 0.5in 0.5in 0.5in 0.5in;
+      }
       @media print {
         body > *:not(#${portalId}) { display: none !important; }
+        * { margin: 0; padding: 0; }
         #${portalId} {
           display: block !important;
           font-family: Arial, sans-serif;
           color: #000;
           background: #fff;
-          padding: 0.5in;
+          width: 100%;
         }
-        #${portalId} .print-section { page-break-after: always; }
+        #${portalId} .print-section { 
+          page-break-after: always;
+          page-break-inside: avoid;
+        }
         #${portalId} .print-section:last-child { page-break-after: avoid; }
+        #${portalId} .page-break { 
+          page-break-after: always;
+          page-break-inside: avoid;
+        }
+        #${portalId} .page-break:last-child { page-break-after: avoid; }
         #${portalId} .text-center { text-align: center; }
-        #${portalId} .mb-8 { margin-bottom: 2rem; }
-        #${portalId} .mb-6 { margin-bottom: 1.5rem; }
-        #${portalId} .mt-4 { margin-top: 1rem; }
-        #${portalId} h1 { font-size: 1.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; text-align: center; }
-        #${portalId} h2 { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; line-height: 1.4; text-align: center; }
-        #${portalId} h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; margin-top: 0.25rem; text-align: center; }
-        #${portalId} table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-        #${portalId} th, #${portalId} td { border: 1px solid #111; padding: 6px 10px; }
-        #${portalId} th { white-space: nowrap; }
+        #${portalId} .mb-8 { margin-bottom: 0; }
+        #${portalId} .mb-6 { margin-bottom: 0.5rem; }
+        #${portalId} .mt-4 { margin-top: 0; }
+        #${portalId} .space-y-12 > * + * { margin-top: 0; }
+        #${portalId} h1 { font-size: 13pt; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; text-align: center; }
+        #${portalId} h2 { font-size: 10pt; font-weight: 700; text-transform: uppercase; line-height: 1.3; text-align: center; margin-bottom: 0.5rem; }
+        #${portalId} h3 { font-size: 9pt; font-weight: 700; text-transform: uppercase; margin-top: 0; margin-bottom: 0.75rem; text-align: center; }
+        #${portalId} table { 
+          width: 100%; 
+          border-collapse: collapse; 
+          font-size: 9pt;
+          break-inside: auto;
+          border: none;
+        }
+        #${portalId} tr { break-inside: avoid; page-break-inside: avoid; }
+        #${portalId} th, #${portalId} td { 
+          border: 1px solid #000; 
+          padding: 5px 6px;
+          text-align: left;
+        }
+        #${portalId} th { 
+          white-space: normal;
+          word-break: break-word;
+          font-weight: 700;
+        }
         #${portalId} thead tr {
           background-color: #b2e05c !important;
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
-          color: #000; font-weight: 700; text-align: center;
+          color: #000; 
+          font-weight: 700; 
+          text-align: center;
+          break-after: avoid;
         }
+        #${portalId} tbody tr:first-child { break-before: avoid; }
       }
     `;
     document.head.appendChild(style);
@@ -445,7 +477,7 @@ export default function Printables() {
         </div>
 
         {/* Right: Preview Area */}
-        <div className="flex-1 bg-white dark:bg-neutral-950 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 overflow-y-auto relative">
+        <div className="flex-1 bg-neutral-100 dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 overflow-y-auto relative p-4">
           {previewData.length === 0 ? (
             <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-400">
               <Printer className="w-16 h-16 mb-4 text-neutral-300 dark:text-neutral-800" />
@@ -454,78 +486,94 @@ export default function Printables() {
               </p>
             </div>
           ) : (
-            <div ref={printRef} className="p-10 space-y-12">
-              {Object.entries(groupedData).map(([program, students], idx) => (
-                <div
-                  key={program}
-                  className={`print-section ${idx > 0 ? "pt-12 border-t-2 border-dashed border-neutral-200 dark:border-neutral-800" : ""}`}
-                >
-                  <div className="text-center mb-8">
-                    <h2 className="text-xl font-bold uppercase text-neutral-900 dark:text-white leading-tight">
-                      LIST OF BATCH {yearOption || "ALL"} STUDENTS{" "}
-                      {sf10Option === "passed" ? "WITH" : "WITHOUT"} SF10/TOR AS
-                      OF {currentDate}
-                    </h2>
-                    <h3 className="text-lg font-bold uppercase text-neutral-900 dark:text-white mt-1">
-                      {semester}, A.Y. {academicYear}
-                    </h3>
-                  </div>
+            <div className="flex flex-col gap-4 items-center">
+              <div ref={printRef} className="space-y-4 w-full max-w-[8.5in]">
+                {Object.entries(groupedData).map(([program, students]) => (
+                  <div
+                    key={program}
+                    className="bg-white dark:bg-neutral-950 p-8 shadow-md rounded-sm page-break"
+                  >
+                    <div className="text-center mb-6">
+                      <h2 className="text-sm font-bold uppercase text-neutral-900 dark:text-white leading-tight">
+                        LIST OF BATCH {yearOption || "ALL"} STUDENTS{" "}
+                        {sf10Option === "passed" ? "WITH" : "WITHOUT"} SF10/TOR
+                        AS OF {currentDate}
+                      </h2>
+                      <h3 className="text-xs font-normal uppercase text-neutral-900 dark:text-white mt-1">
+                        {semester}, A.Y. {academicYear}
+                      </h3>
+                    </div>
 
-                  <h1 className="text-2xl font-black uppercase text-center tracking-widest text-neutral-900 dark:text-white mb-6">
-                    {program}
-                  </h1>
+                    <h1 className="text-lg font-black uppercase text-center tracking-wider text-neutral-900 dark:text-white mb-4">
+                      {program}
+                    </h1>
 
-                  <table className="w-full text-left border-collapse border border-neutral-900 dark:border-neutral-500">
-                    <thead>
-                      <tr
-                        className="bg-[#b2e05c] text-black"
-                        style={
-                          {
-                            WebkitPrintColorAdjust: "exact",
-                            printColorAdjust: "exact",
-                          } as React.CSSProperties
-                        }
-                      >
-                        <th className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center w-1/3 whitespace-nowrap">
-                          FULL NAME
-                        </th>
-                        <th className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center w-1/6 whitespace-nowrap">
-                          COURSE CODE
-                        </th>
-                        <th className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center w-1/2 whitespace-nowrap">
-                          SCHOOL
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {students.map((student) => (
+                    <table className="w-full text-left border-collapse border border-neutral-900 dark:border-neutral-500 text-xs">
+                      <thead>
                         <tr
-                          key={student.student_id}
-                          className="text-neutral-900 dark:text-white"
+                          className="bg-[#b2e05c] text-black"
+                          style={
+                            {
+                              WebkitPrintColorAdjust: "exact",
+                              printColorAdjust: "exact",
+                            } as React.CSSProperties
+                          }
                         >
-                          <td className="py-2 px-3 font-semibold border border-neutral-900 dark:border-neutral-500">
-                            {student.last_name.toUpperCase()},{" "}
-                            {student.first_name.toUpperCase()}{" "}
-                            {student.middle_name
-                              ? `${student.middle_name.toUpperCase()}`
-                              : ""}
-                          </td>
-                          <td
-                            className="py-2 px-3 font-medium border border-neutral-900 dark:border-neutral-500 text-center"
-                            style={{ textAlign: "center" }}
+                          <th
+                            className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center whitespace-normal"
+                            style={{ width: "33.33%" }}
                           >
-                            {" "}
-                            {student.program}
-                          </td>
-                          <td className="py-2 px-3 border border-neutral-900 dark:border-neutral-500 uppercase text-sm">
-                            {student.shs_name || ""}
-                          </td>
+                            FULL NAME
+                          </th>
+                          <th
+                            className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center whitespace-nowrap"
+                            style={{ width: "16.67%" }}
+                          >
+                            COURSE CODE
+                          </th>
+                          <th
+                            className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center whitespace-normal"
+                            style={{ width: "50%" }}
+                          >
+                            SCHOOL
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ))}
+                      </thead>
+                      <tbody>
+                        {students.map((student) => (
+                          <tr
+                            key={student.student_id}
+                            className="text-neutral-900 dark:text-white"
+                          >
+                            <td
+                              className="py-2 px-3 font-normal border border-neutral-900 dark:border-neutral-500"
+                              style={{ width: "33.33%" }}
+                            >
+                              {student.last_name.toUpperCase()},{" "}
+                              {student.first_name.toUpperCase()}{" "}
+                              {student.middle_name
+                                ? `${student.middle_name.toUpperCase()}`
+                                : ""}
+                            </td>
+                            <td
+                              className="py-2 px-3 font-normal border border-neutral-900 dark:border-neutral-500 text-center whitespace-nowrap"
+                              style={{ width: "16.67%" }}
+                            >
+                              {student.program}
+                            </td>
+                            <td
+                              className="py-2 px-3 border border-neutral-900 dark:border-neutral-500 uppercase font-normal"
+                              style={{ width: "50%" }}
+                            >
+                              {student.shs_name || ""}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
