@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { usePersistentState } from "../hooks/usePersistentState";
 import { api, Student } from "../lib/api";
-import { Search, Loader2, X } from "lucide-react";
+import { Search, Loader2, X, AlertCircle } from "lucide-react";
 
 export default function Tables() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -27,6 +27,12 @@ export default function Tables() {
   // Edit State
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<Student>>({});
+
+  // Status change confirmation
+  const [statusConfirm, setStatusConfirm] = useState<{
+    studentId: string;
+    currentStatus: boolean;
+  } | null>(null);
 
   const [years, setYears] = useState<number[]>([]);
   const [programs, setPrograms] = useState<string[]>([]);
@@ -69,10 +75,15 @@ export default function Tables() {
   const toggleStatus = async (studentId: string, currentStatus: boolean) => {
     try {
       await api.toggleSf10(studentId, !currentStatus);
+      setStatusConfirm(null);
       fetchStudents();
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleStatusClick = (studentId: string, currentStatus: boolean) => {
+    setStatusConfirm({ studentId, currentStatus });
   };
 
   const startEditing = (student: Student) => {
@@ -251,7 +262,7 @@ export default function Tables() {
                     <td className="px-6 py-4">
                       <button
                         onClick={() =>
-                          toggleStatus(
+                          handleStatusClick(
                             student.student_id,
                             student.status_passed_sf10,
                           )
@@ -380,6 +391,54 @@ export default function Tables() {
                 type="button"
               >
                 Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Status Change Confirmation Modal */}
+      {statusConfirm && (
+        <div className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-xl w-full max-w-sm border border-neutral-200 dark:border-neutral-800 flex flex-col overflow-hidden">
+            <div className="flex items-center justify-center p-6 border-b border-neutral-200 dark:border-neutral-800 flex-shrink-0">
+              <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+              </div>
+            </div>
+
+            <div className="p-6 text-center space-y-3">
+              <h3 className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white">
+                Change Student Status?
+              </h3>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                {statusConfirm.currentStatus
+                  ? "Mark this student as Not Passed?"
+                  : "Mark this student as Passed?"}
+              </p>
+              <p className="text-xs text-neutral-500 dark:text-neutral-500">
+                This action will update the student's SF10 status in the
+                database.
+              </p>
+            </div>
+
+            <div className="p-6 border-t border-neutral-200 dark:border-neutral-800 flex justify-center gap-3 bg-neutral-50 dark:bg-neutral-900 rounded-b-2xl flex-shrink-0">
+              <button
+                onClick={() => setStatusConfirm(null)}
+                className="px-5 py-2.5 text-sm font-medium text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 hover:bg-neutral-200/50 dark:hover:bg-neutral-800 rounded-xl transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() =>
+                  toggleStatus(
+                    statusConfirm.studentId,
+                    statusConfirm.currentStatus,
+                  )
+                }
+                className="px-5 py-2.5 text-sm font-semibold text-white bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-600 rounded-xl shadow-sm transition-colors"
+              >
+                Confirm Change
               </button>
             </div>
           </div>
