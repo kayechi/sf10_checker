@@ -78,6 +78,11 @@ export default function Imports() {
                 status_passed_sf10: ["true", "1", "yes", "passed"].includes(
                   String(row.status_passed_sf10).toLowerCase().trim(),
                 ),
+                enrolled_or_not_enrolled: row.enrolled_or_not_enrolled
+                  ? ["true", "1", "yes", "enrolled"].includes(
+                      String(row.enrolled_or_not_enrolled).toLowerCase().trim(),
+                    )
+                  : true, // Default to enrolled (true)
               }))
               .filter(
                 (s) => s.student_id && s.last_name && s.first_name && s.program,

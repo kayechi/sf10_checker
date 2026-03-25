@@ -16,6 +16,9 @@ export default function Tables() {
   const [statusFilter, setStatusFilter] = usePersistentState<
     boolean | undefined
   >("tablesStatusFilter", undefined);
+  const [enrollmentFilter, setEnrollmentFilter] = usePersistentState<
+    boolean | undefined
+  >("tablesEnrollmentFilter", undefined);
   const [programFilter, setProgramFilter] = usePersistentState<string>(
     "tablesProgramFilter",
     "",
@@ -32,6 +35,12 @@ export default function Tables() {
   const [statusConfirm, setStatusConfirm] = useState<{
     studentId: string;
     currentStatus: boolean;
+  } | null>(null);
+
+  // Enrollment change confirmation
+  const [enrollmentConfirm, setEnrollmentConfirm] = useState<{
+    studentId: string;
+    currentEnrolled: boolean;
   } | null>(null);
 
   const [years, setYears] = useState<number[]>([]);
@@ -55,6 +64,7 @@ export default function Tables() {
         statusFilter,
         search,
         programFilter || undefined,
+        enrollmentFilter,
       );
       setStudents(data);
     } catch (err) {
@@ -70,7 +80,7 @@ export default function Tables() {
       fetchStudents();
     }, 300);
     return () => clearTimeout(timer);
-  }, [search, yearCode, statusFilter, programFilter]);
+  }, [search, yearCode, statusFilter, enrollmentFilter, programFilter]);
 
   const toggleStatus = async (studentId: string, currentStatus: boolean) => {
     try {
@@ -84,6 +94,26 @@ export default function Tables() {
 
   const handleStatusClick = (studentId: string, currentStatus: boolean) => {
     setStatusConfirm({ studentId, currentStatus });
+  };
+
+  const toggleEnrollment = async (
+    studentId: string,
+    currentEnrolled: boolean,
+  ) => {
+    try {
+      await api.toggleEnrolled(studentId, !currentEnrolled);
+      setEnrollmentConfirm(null);
+      fetchStudents();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleEnrollmentClick = (
+    studentId: string,
+    currentEnrolled: boolean,
+  ) => {
+    setEnrollmentConfirm({ studentId, currentEnrolled });
   };
 
   const startEditing = (student: Student) => {
@@ -158,6 +188,25 @@ export default function Tables() {
           </select>
 
           <select
+            value={
+              enrollmentFilter === undefined
+                ? ""
+                : enrollmentFilter
+                  ? "true"
+                  : "false"
+            }
+            onChange={(e) => {
+              const val = e.target.value;
+              setEnrollmentFilter(val === "" ? undefined : val === "true");
+            }}
+            className="px-4 py-2 rounded-xl bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+          >
+            <option value="">All Enrollment</option>
+            <option value="true">Enrolled</option>
+            <option value="false">Not Enrolled</option>
+          </select>
+
+          <select
             value={programFilter}
             onChange={(e) => setProgramFilter(e.target.value)}
             className="px-4 py-2 rounded-xl bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -199,6 +248,7 @@ export default function Tables() {
                 <th className="px-6 py-4 font-semibold text-sm">Middle</th>
                 <th className="px-6 py-4 font-semibold text-sm">Course</th>
                 <th className="px-6 py-4 font-semibold text-sm">SHS Name</th>
+                <th className="px-6 py-4 font-semibold text-sm">Enrollment</th>
                 <th className="px-6 py-4 font-semibold text-sm">Status</th>
                 <th className="px-6 py-4 font-semibold text-sm text-right">
                   Actions
@@ -209,7 +259,7 @@ export default function Tables() {
               {sortedStudents.length === 0 && !loading && (
                 <tr>
                   <td
-                    colSpan={8}
+                    colSpan={9}
                     className="px-6 py-12 text-center text-neutral-500"
                   >
                     No student records found.
@@ -258,6 +308,26 @@ export default function Tables() {
                         {student.shs_name || "-"}
                       </td>
                     </>
+
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() =>
+                          handleEnrollmentClick(
+                            student.student_id,
+                            student.enrolled_or_not_enrolled,
+                          )
+                        }
+                        className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide transition-colors ${
+                          student.enrolled_or_not_enrolled
+                            ? "bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50"
+                            : "bg-orange-100 text-orange-700 hover:bg-orange-200 dark:bg-orange-900/30 dark:text-orange-400 dark:hover:bg-orange-900/50"
+                        }`}
+                      >
+                        {student.enrolled_or_not_enrolled
+                          ? "Enrolled"
+                          : "Not Enrolled"}
+                      </button>
+                    </td>
 
                     <td className="px-6 py-4">
                       <button
@@ -437,6 +507,54 @@ export default function Tables() {
                   )
                 }
                 className="px-5 py-2.5 text-sm font-semibold text-white bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-600 rounded-xl shadow-sm transition-colors"
+              >
+                Confirm Change
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Enrollment Change Confirmation Modal */}
+      {enrollmentConfirm && (
+        <div className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-xl w-full max-w-sm border border-neutral-200 dark:border-neutral-800 flex flex-col overflow-hidden">
+            <div className="flex items-center justify-center p-6 border-b border-neutral-200 dark:border-neutral-800 flex-shrink-0">
+              <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              </div>
+            </div>
+
+            <div className="p-6 text-center space-y-3">
+              <h3 className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white">
+                Change Enrollment Status?
+              </h3>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                {enrollmentConfirm.currentEnrolled
+                  ? "Mark this student as Not Enrolled?"
+                  : "Mark this student as Enrolled?"}
+              </p>
+              <p className="text-xs text-neutral-500 dark:text-neutral-500">
+                This action will update the student's enrollment status in the
+                database.
+              </p>
+            </div>
+
+            <div className="p-6 border-t border-neutral-200 dark:border-neutral-800 flex justify-center gap-3 bg-neutral-50 dark:bg-neutral-900 rounded-b-2xl flex-shrink-0">
+              <button
+                onClick={() => setEnrollmentConfirm(null)}
+                className="px-5 py-2.5 text-sm font-medium text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 hover:bg-neutral-200/50 dark:hover:bg-neutral-800 rounded-xl transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() =>
+                  toggleEnrollment(
+                    enrollmentConfirm.studentId,
+                    enrollmentConfirm.currentEnrolled,
+                  )
+                }
+                className="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-xl shadow-sm transition-colors"
               >
                 Confirm Change
               </button>

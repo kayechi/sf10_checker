@@ -8,6 +8,10 @@ export default function Printables() {
     "printablesSf10Option",
     "passed",
   );
+  const [enrollmentOption, setEnrollmentOption] = usePersistentState<string>(
+    "printablesEnrollmentOption",
+    "enrolled",
+  );
   const [yearOption, setYearOption] = usePersistentState<number | undefined>(
     "printablesYearOption",
     undefined,
@@ -49,8 +53,17 @@ export default function Printables() {
   };
 
   useEffect(() => {
-    api.getDashboardStats(yearOption).then(setStats).catch(console.error);
-  }, [yearOption]);
+    const enrolled =
+      enrollmentOption === "enrolled"
+        ? true
+        : enrollmentOption === "not_enrolled"
+          ? false
+          : undefined;
+    api
+      .getDashboardStats(yearOption, enrolled)
+      .then(setStats)
+      .catch(console.error);
+  }, [yearOption, enrollmentOption]);
 
   useEffect(() => {
     api
@@ -86,10 +99,17 @@ export default function Printables() {
           : sf10Option === "not_passed"
             ? false
             : undefined;
+      const enrolled =
+        enrollmentOption === "enrolled"
+          ? true
+          : enrollmentOption === "not_enrolled"
+            ? false
+            : undefined;
       const programsList = Array.from(selectedPrograms);
       const data = await api.getPrintableStudents(
         yearOption,
         passed,
+        enrolled,
         programsList,
       );
       setPreviewData(data);
@@ -309,6 +329,20 @@ export default function Printables() {
             >
               <option value="passed">With SF10 (Passed)</option>
               <option value="not_passed">No SF10 (Not Passed)</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+              Enrollment Status
+            </label>
+            <select
+              value={enrollmentOption}
+              onChange={(e) => setEnrollmentOption(e.target.value)}
+              className="w-full px-4 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 focus:outline-none focus:ring-2 focus:ring-primary-500 font-medium"
+            >
+              <option value="enrolled">Enrolled</option>
+              <option value="not_enrolled">Not Enrolled</option>
             </select>
           </div>
 
