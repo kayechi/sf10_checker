@@ -234,7 +234,7 @@ export default function Printables() {
     // Build sections with Word-native page breaks between them
     const wordPageBreak = `<br style="mso-break-type:page-break" clear="all"/>`;
     const sections = Array.from(
-      printRef.current.querySelectorAll<HTMLElement>(".print-section"),
+      printRef.current.querySelectorAll<HTMLElement>(".page-break"),
     );
     const sectionsHtml = sections
       .map((s) => {
@@ -575,7 +575,7 @@ export default function Printables() {
                             className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center whitespace-normal"
                             style={{ width: "50%" }}
                           >
-                            SCHOOL
+                            SENIOR HIGH SCHOOL
                           </th>
                         </tr>
                       </thead>
@@ -597,7 +597,7 @@ export default function Printables() {
                             </td>
                             <td
                               className="py-2 px-3 font-normal border border-neutral-900 dark:border-neutral-500 text-center whitespace-nowrap"
-                              style={{ width: "16.67%" }}
+                              style={{ width: "16.67%", textAlign: "center" }}
                             >
                               {student.program}
                             </td>
