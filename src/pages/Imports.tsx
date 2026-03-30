@@ -166,7 +166,7 @@ export default function Imports() {
   };
 
   const expectedHeaders =
-    "student_id, last_name, first_name, middle_name, program, year_enrolled, shs_name, status_passed_sf10";
+    "student_id, last_name, first_name, middle_name, program, year_enrolled, shs_name, status_passed_sf10, enrolled_or_not_enrolled";
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto h-full flex flex-col">

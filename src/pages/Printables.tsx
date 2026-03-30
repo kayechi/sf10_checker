@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { usePersistentState } from "../hooks/usePersistentState";
 import { api, DashboardStats, Student } from "../lib/api";
-import { Printer, FileText, CheckCircle, FileSpreadsheet } from "lucide-react";
-import Papa from "papaparse";
+import { Printer, FileText, CheckCircle } from "lucide-react";
 
 export default function Printables() {
   const [sf10Option, setSf10Option] = usePersistentState<string>(
@@ -234,7 +233,7 @@ export default function Printables() {
     // Build sections with Word-native page breaks between them
     const wordPageBreak = `<br style="mso-break-type:page-break" clear="all"/>`;
     const sections = Array.from(
-      printRef.current.querySelectorAll<HTMLElement>(".page-break"),
+      printRef.current.querySelectorAll<HTMLElement>(".print-section"),
     );
     const sectionsHtml = sections
       .map((s) => {
@@ -278,36 +277,6 @@ export default function Printables() {
     a.click();
     URL.revokeObjectURL(url);
     showToast(`Saved: ${filename}`);
-  };
-
-  const handleExportCSV = async () => {
-    try {
-      const data = await api.getStudents(yearOption);
-      const csvData = data.map((s) => ({
-        student_id: s.student_id,
-        last_name: s.last_name,
-        first_name: s.first_name,
-        middle_name: s.middle_name || "",
-        program: s.program,
-        year_enrolled: s.year_enrolled,
-        shs_name: s.shs_name || "",
-        status_passed_sf10: s.status_passed_sf10 ? "Passed" : "Not Passed",
-      }));
-
-      const csv = Papa.unparse(csvData);
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      const filename = `students_export_${yearOption || "all_years"}.csv`;
-      a.download = filename;
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast(`Exported: ${filename}`);
-    } catch (err) {
-      console.error("Failed to export CSV:", err);
-      showToast("Failed to export CSV");
-    }
   };
 
   const groupedData = previewData.reduce(
@@ -360,15 +329,6 @@ export default function Printables() {
           >
             <FileText className="w-4 h-4 text-blue-500" />
             Save as Word
-          </button>
-
-          {/* Export as CSV button */}
-          <button
-            onClick={handleExportCSV}
-            className="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 rounded-xl shadow-sm hover:bg-neutral-50 dark:hover:bg-neutral-800 font-semibold transition-all"
-          >
-            <FileSpreadsheet className="w-4 h-4 text-green-500" />
-            Export as CSV
           </button>
 
           {/* Print button */}
@@ -575,7 +535,7 @@ export default function Printables() {
                             className="py-2 px-3 font-bold border border-neutral-900 dark:border-neutral-500 text-center whitespace-normal"
                             style={{ width: "50%" }}
                           >
-                            SENIOR HIGH SCHOOL
+                            SCHOOL
                           </th>
                         </tr>
                       </thead>
@@ -597,7 +557,7 @@ export default function Printables() {
                             </td>
                             <td
                               className="py-2 px-3 font-normal border border-neutral-900 dark:border-neutral-500 text-center whitespace-nowrap"
-                              style={{ width: "16.67%", textAlign: "center" }}
+                              style={{ width: "16.67%" }}
                             >
                               {student.program}
                             </td>
