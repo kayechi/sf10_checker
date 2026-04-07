@@ -47,6 +47,12 @@ export default function Tables() {
     currentEnrolled: boolean;
   } | null>(null);
 
+  // Bulk selection state
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkEnrollmentConfirm, setBulkEnrollmentConfirm] = useState<{
+    enrolled: boolean;
+  } | null>(null);
+
   const [years, setYears] = useState<number[]>([]);
   const [programs, setPrograms] = useState<string[]>([]);
 
@@ -158,6 +164,41 @@ export default function Tables() {
     }
   }, [totalPages, currentPage]);
 
+  const isAllPageSelected =
+    paginatedStudents.length > 0 &&
+    paginatedStudents.every((s) => selectedIds.has(s.student_id));
+
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newSelected = new Set(selectedIds);
+    if (e.target.checked) {
+      paginatedStudents.forEach((s) => newSelected.add(s.student_id));
+    } else {
+      paginatedStudents.forEach((s) => newSelected.delete(s.student_id));
+    }
+    setSelectedIds(newSelected);
+  };
+
+  const toggleSelect = (id: string) => {
+    const newSelected = new Set(selectedIds);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedIds(newSelected);
+  };
+
+  const handleBulkEnrollment = async (enrolled: boolean) => {
+    try {
+      await api.toggleEnrolledBatch(Array.from(selectedIds), enrolled);
+      setBulkEnrollmentConfirm(null);
+      setSelectedIds(new Set()); // clear selection
+      fetchStudents();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="space-y-6 h-full flex flex-col">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -251,6 +292,34 @@ export default function Tables() {
       </div>
 
       <div className="flex-1 bg-white dark:bg-neutral-950 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 overflow-hidden flex flex-col">
+        {selectedIds.size > 0 && (
+          <div className="bg-blue-50 dark:bg-blue-900/20 px-6 py-3 border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
+            <div className="text-sm font-medium text-blue-800 dark:text-blue-300">
+              {selectedIds.size} student{selectedIds.size > 1 ? "s" : ""} selected
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setBulkEnrollmentConfirm({ enrolled: true })}
+                className="px-3 py-1.5 text-sm font-semibold text-blue-700 bg-blue-100 hover:bg-blue-200 dark:text-blue-300 dark:bg-blue-900/40 dark:hover:bg-blue-800/60 rounded-lg transition-colors"
+              >
+                Mark Enrolled
+              </button>
+              <button
+                onClick={() => setBulkEnrollmentConfirm({ enrolled: false })}
+                className="px-3 py-1.5 text-sm font-semibold text-orange-700 bg-orange-100 hover:bg-orange-200 dark:text-orange-300 dark:bg-orange-900/40 dark:hover:bg-orange-800/60 rounded-lg transition-colors"
+              >
+                Mark Not Enrolled
+              </button>
+              <button
+                onClick={() => setSelectedIds(new Set())}
+                className="px-3 py-1.5 text-sm font-medium text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="overflow-x-auto flex-1 relative">
           {loading && (
             <div className="absolute inset-0 bg-white/50 dark:bg-neutral-950/50 flex items-center justify-center z-10 backdrop-blur-sm">
@@ -260,6 +329,15 @@ export default function Tables() {
           <table className="w-full text-left border-collapse">
             <thead className="bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 sticky top-0 z-0">
               <tr>
+                <th className="px-6 py-4 w-12">
+                  <input
+                    type="checkbox"
+                    checked={isAllPageSelected}
+                    onChange={handleSelectAll}
+                    className="w-4 h-4 rounded border-neutral-300 text-primary-600 focus:ring-primary-500 disabled:opacity-50"
+                    disabled={paginatedStudents.length === 0}
+                  />
+                </th>
                 <th className="px-6 py-4 font-semibold text-sm">Student ID</th>
                 <th className="px-6 py-4 font-semibold text-sm">Last Name</th>
                 <th className="px-6 py-4 font-semibold text-sm">First Name</th>
@@ -277,7 +355,7 @@ export default function Tables() {
               {paginatedStudents.length === 0 && !loading && (
                 <tr>
                   <td
-                    colSpan={9}
+                    colSpan={10}
                     className="px-6 py-12 text-center text-neutral-500"
                   >
                     No student records found.
@@ -290,6 +368,14 @@ export default function Tables() {
                     key={student.student_id}
                     className="hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors"
                   >
+                    <td className="px-6 py-4">
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.has(student.student_id)}
+                        onChange={() => toggleSelect(student.student_id)}
+                        className="w-4 h-4 rounded border-neutral-300 text-primary-600 focus:ring-primary-500"
+                      />
+                    </td>
                     <td className="px-6 py-4 font-medium">
                       {student.student_id}
                     </td>
@@ -622,6 +708,49 @@ export default function Tables() {
                 className="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-xl shadow-sm transition-colors"
               >
                 Confirm Change
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bulk Enrollment Change Confirmation Modal */}
+      {bulkEnrollmentConfirm && (
+        <div className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-xl w-full max-w-sm border border-neutral-200 dark:border-neutral-800 flex flex-col overflow-hidden">
+            <div className="flex items-center justify-center p-6 border-b border-neutral-200 dark:border-neutral-800 flex-shrink-0">
+              <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              </div>
+            </div>
+
+            <div className="p-6 text-center space-y-3">
+              <h3 className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white">
+                Change Enrollment Status?
+              </h3>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                You are about to mark {selectedIds.size} student{selectedIds.size > 1 ? "s" : ""} as{" "}
+                <span className="font-semibold text-neutral-900 dark:text-white">
+                  {bulkEnrollmentConfirm.enrolled ? "Enrolled" : "Not Enrolled"}
+                </span>.
+              </p>
+              <p className="text-xs text-neutral-500 dark:text-neutral-500">
+                This action will update the database records immediately.
+              </p>
+            </div>
+
+            <div className="p-6 border-t border-neutral-200 dark:border-neutral-800 flex justify-center gap-3 bg-neutral-50 dark:bg-neutral-900 rounded-b-2xl flex-shrink-0">
+              <button
+                onClick={() => setBulkEnrollmentConfirm(null)}
+                className="px-5 py-2.5 text-sm font-medium text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 hover:bg-neutral-200/50 dark:hover:bg-neutral-800 rounded-xl transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleBulkEnrollment(bulkEnrollmentConfirm.enrolled)}
+                className="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-xl shadow-sm transition-colors"
+              >
+                Confirm Batch Change
               </button>
             </div>
           </div>
