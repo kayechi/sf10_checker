@@ -19,6 +19,7 @@ pub fn run() {
             commands::commands::update_student,
             commands::commands::toggle_sf10,
             commands::commands::toggle_enrolled,
+            commands::commands::toggle_enrolled_batch,
             commands::commands::get_dashboard_stats,
             commands::commands::get_printable_students,
             commands::commands::import_students,

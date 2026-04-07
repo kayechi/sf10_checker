@@ -70,6 +70,9 @@ export const api = {
   toggleEnrolled: (studentId: string, enrolled: boolean) =>
     invoke<void>("toggle_enrolled", { studentId, enrolled }),
 
+  toggleEnrolledBatch: (studentIds: string[], enrolled: boolean) =>
+    invoke<void>("toggle_enrolled_batch", { studentIds, enrolled }),
+
   getDashboardStats: (year?: number, enrolled?: boolean) =>
     invoke<DashboardStats>("get_dashboard_stats", { year, enrolled }),
 
