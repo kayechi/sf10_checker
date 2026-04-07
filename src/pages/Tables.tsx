@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { usePersistentState } from "../hooks/usePersistentState";
 import { api, Student } from "../lib/api";
-import { Search, Loader2, X, AlertCircle } from "lucide-react";
+import { Search, Loader2, X, AlertCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Tables() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -30,6 +30,10 @@ export default function Tables() {
   // Edit State
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<Student>>({});
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(100);
 
   // Status change confirmation
   const [statusConfirm, setStatusConfirm] = useState<{
@@ -67,6 +71,7 @@ export default function Tables() {
         enrollmentFilter,
       );
       setStudents(data);
+      setCurrentPage(1);
     } catch (err) {
       console.error(err);
     } finally {
@@ -139,6 +144,19 @@ export default function Tables() {
     if (sortBy === "name_desc") return b.last_name.localeCompare(a.last_name);
     return 0;
   });
+
+  const totalPages = Math.max(1, Math.ceil(sortedStudents.length / itemsPerPage));
+  const paginatedStudents = sortedStudents.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  // Ensure current page is valid when data changes
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(Math.max(1, totalPages));
+    }
+  }, [totalPages, currentPage]);
 
   return (
     <div className="space-y-6 h-full flex flex-col">
@@ -256,7 +274,7 @@ export default function Tables() {
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-200 dark:divide-neutral-800">
-              {sortedStudents.length === 0 && !loading && (
+              {paginatedStudents.length === 0 && !loading && (
                 <tr>
                   <td
                     colSpan={9}
@@ -266,7 +284,7 @@ export default function Tables() {
                   </td>
                 </tr>
               )}
-              {sortedStudents.map((student) => {
+              {paginatedStudents.map((student) => {
                 return (
                   <tr
                     key={student.student_id}
@@ -360,6 +378,53 @@ export default function Tables() {
               })}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="border-t border-neutral-200 dark:border-neutral-800 p-4 flex flex-col sm:flex-row items-center justify-between gap-4 bg-neutral-50 dark:bg-neutral-900/50">
+          <div className="text-sm text-neutral-500 dark:text-neutral-400">
+            Showing <span className="font-medium text-neutral-900 dark:text-white">{sortedStudents.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1}</span> to <span className="font-medium text-neutral-900 dark:text-white">{Math.min(currentPage * itemsPerPage, sortedStudents.length)}</span> of <span className="font-medium text-neutral-900 dark:text-white">{sortedStudents.length}</span> students
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-neutral-500 dark:text-neutral-400 hidden sm:inline">Rows per page:</span>
+              <select
+                value={itemsPerPage}
+                onChange={(e) => {
+                  setItemsPerPage(Number(e.target.value));
+                  setCurrentPage(1);
+                }}
+                className="px-2 py-1 rounded-lg bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+              >
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+                <option value={200}>200</option>
+                <option value={500}>500</option>
+              </select>
+            </div>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="p-1.5 rounded-lg text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                title="Previous Page"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <div className="text-sm font-medium text-neutral-700 dark:text-neutral-300 min-w-[5rem] text-center">
+                Page {currentPage} / {totalPages}
+              </div>
+              <button
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="p-1.5 rounded-lg text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                title="Next Page"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
