@@ -402,8 +402,8 @@ export default function Printables() {
               onChange={(e) => setSf10Option(e.target.value)}
               className="w-full px-4 py-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 focus:outline-none focus:ring-2 focus:ring-primary-500 font-medium"
             >
-              <option value="passed">With SF10 (Passed)</option>
-              <option value="not_passed">No SF10 (Not Passed)</option>
+              <option value="passed">Submitted</option>
+              <option value="not_passed">Not Submitted</option>
             </select>
           </div>
 

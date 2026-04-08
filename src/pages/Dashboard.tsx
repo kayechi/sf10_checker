@@ -81,8 +81,8 @@ export default function Dashboard() {
 
   const programData = overallStats.programs.map((p) => ({
     name: p.program,
-    "Passed SF10": p.passed,
-    "Not Passed SF10": p.failed,
+    "Submitted SF10": p.passed,
+    "Not Submitted SF10": p.failed,
   }));
 
   const enrollmentData = [
@@ -196,7 +196,7 @@ export default function Dashboard() {
         {/* Enrollment Distribution Pie Chart */}
         <div className="p-6 bg-white dark:bg-neutral-950 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 flex flex-col">
           <h3 className="font-semibold mb-6 text-lg">
-            Enrollment Distribution
+            SF10 Distribution
           </h3>
           <div className="flex-1 flex items-center justify-center">
             <ResponsiveContainer width="100%" height={320}>
@@ -288,8 +288,8 @@ export default function Dashboard() {
               <PieChart>
                 <Pie
                   data={[
-                    { name: "Passed SF10", value: overallStats.passed },
-                    { name: "Not Passed SF10", value: overallStats.failed },
+                    { name: "Submitted SF10", value: overallStats.passed },
+                    { name: "Not Submitted SF10", value: overallStats.failed },
                   ]}
                   cx="50%"
                   cy="50%"
@@ -320,7 +320,7 @@ export default function Dashboard() {
                   className="w-3 h-3 rounded-full"
                   style={{ backgroundColor: COLORS.enrolledWithSF10 }}
                 />
-                <span>Passed SF10</span>
+                <span>Submitted SF10</span>
               </div>
               <span className="font-semibold">{overallStats.passed}</span>
             </div>
@@ -330,7 +330,7 @@ export default function Dashboard() {
                   className="w-3 h-3 rounded-full"
                   style={{ backgroundColor: COLORS.notEnrolledWithoutSF10 }}
                 />
-                <span>Not Passed SF10</span>
+                <span>Not Submitted SF10</span>
               </div>
               <span className="font-semibold">{overallStats.failed}</span>
             </div>
@@ -373,13 +373,13 @@ export default function Dashboard() {
               />
               <Legend iconType="circle" />
               <Bar
-                dataKey="Passed SF10"
+                dataKey="Submitted SF10"
                 fill="#10b981"
                 radius={[4, 4, 0, 0]}
                 maxBarSize={40}
               />
               <Bar
-                dataKey="Not Passed SF10"
+                dataKey="Not Submitted SF10"
                 fill="#ef4444"
                 radius={[4, 4, 0, 0]}
                 maxBarSize={40}
