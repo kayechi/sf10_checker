@@ -67,6 +67,9 @@ export const api = {
   toggleSf10: (studentId: string, passed: boolean) =>
     invoke<void>("toggle_sf10", { studentId, passed }),
 
+  toggleSf10Batch: (studentIds: string[], passed: boolean) =>
+    invoke<void>("toggle_sf10_batch", { studentIds, passed }),
+
   toggleEnrolled: (studentId: string, enrolled: boolean) =>
     invoke<void>("toggle_enrolled", { studentId, enrolled }),
 
