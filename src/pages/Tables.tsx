@@ -52,6 +52,9 @@ export default function Tables() {
   const [bulkEnrollmentConfirm, setBulkEnrollmentConfirm] = useState<{
     enrolled: boolean;
   } | null>(null);
+  const [bulkStatusConfirm, setBulkStatusConfirm] = useState<{
+    passed: boolean;
+  } | null>(null);
 
   const [years, setYears] = useState<number[]>([]);
   const [programs, setPrograms] = useState<string[]>([]);
@@ -199,6 +202,17 @@ export default function Tables() {
     }
   };
 
+  const handleBulkStatus = async (passed: boolean) => {
+    try {
+      await api.toggleSf10Batch(Array.from(selectedIds), passed);
+      setBulkStatusConfirm(null);
+      setSelectedIds(new Set()); // clear selection
+      fetchStudents();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="space-y-6 h-full flex flex-col">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -298,6 +312,19 @@ export default function Tables() {
               {selectedIds.size} student{selectedIds.size > 1 ? "s" : ""} selected
             </div>
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => setBulkStatusConfirm({ passed: true })}
+                className="px-3 py-1.5 text-sm font-semibold text-green-700 bg-green-100 hover:bg-green-200 dark:text-green-300 dark:bg-green-900/40 dark:hover:bg-green-800/60 rounded-lg transition-colors"
+              >
+                Mark Passed
+              </button>
+              <button
+                onClick={() => setBulkStatusConfirm({ passed: false })}
+                className="px-3 py-1.5 text-sm font-semibold text-red-700 bg-red-100 hover:bg-red-200 dark:text-red-300 dark:bg-red-900/40 dark:hover:bg-red-800/60 rounded-lg transition-colors"
+              >
+                Mark Not Passed
+              </button>
+              <div className="w-px h-6 bg-blue-200 dark:bg-blue-800 mx-1"></div>
               <button
                 onClick={() => setBulkEnrollmentConfirm({ enrolled: true })}
                 className="px-3 py-1.5 text-sm font-semibold text-blue-700 bg-blue-100 hover:bg-blue-200 dark:text-blue-300 dark:bg-blue-900/40 dark:hover:bg-blue-800/60 rounded-lg transition-colors"
@@ -749,6 +776,48 @@ export default function Tables() {
               <button
                 onClick={() => handleBulkEnrollment(bulkEnrollmentConfirm.enrolled)}
                 className="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-xl shadow-sm transition-colors"
+              >
+                Confirm Batch Change
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Bulk Status Change Confirmation Modal */}
+      {bulkStatusConfirm && (
+        <div className="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-xl w-full max-w-sm border border-neutral-200 dark:border-neutral-800 flex flex-col overflow-hidden">
+            <div className="flex items-center justify-center p-6 border-b border-neutral-200 dark:border-neutral-800 flex-shrink-0">
+              <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+              </div>
+            </div>
+
+            <div className="p-6 text-center space-y-3">
+              <h3 className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white">
+                Change SF10 Status?
+              </h3>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                You are about to mark {selectedIds.size} student{selectedIds.size > 1 ? "s" : ""} as{" "}
+                <span className="font-semibold text-neutral-900 dark:text-white">
+                  {bulkStatusConfirm.passed ? "Passed" : "Not Passed"}
+                </span>.
+              </p>
+              <p className="text-xs text-neutral-500 dark:text-neutral-500">
+                This action will update the database records immediately.
+              </p>
+            </div>
+
+            <div className="p-6 border-t border-neutral-200 dark:border-neutral-800 flex justify-center gap-3 bg-neutral-50 dark:bg-neutral-900 rounded-b-2xl flex-shrink-0">
+              <button
+                onClick={() => setBulkStatusConfirm(null)}
+                className="px-5 py-2.5 text-sm font-medium text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 hover:bg-neutral-200/50 dark:hover:bg-neutral-800 rounded-xl transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleBulkStatus(bulkStatusConfirm.passed)}
+                className="px-5 py-2.5 text-sm font-semibold text-white bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-600 rounded-xl shadow-sm transition-colors"
               >
                 Confirm Batch Change
               </button>

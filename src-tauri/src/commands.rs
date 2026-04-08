@@ -499,4 +499,34 @@ pub mod commands {
         tx.commit().map_err(|e| e.to_string())?;
         Ok(())
     }
+
+    #[tauri::command]
+    pub fn toggle_sf10_batch(
+        state: State<AppState>,
+        student_ids: Vec<String>,
+        passed: bool,
+    ) -> Result<(), String> {
+        let mut db = state.0.lock().unwrap();
+        let tx = db.transaction().map_err(|e| e.to_string())?;
+
+        let passed_val = if passed { 1 } else { 0 };
+        for id in &student_ids {
+            tx.execute(
+                "UPDATE students SET status_passed_sf10 = ? WHERE student_id = ?",
+                params![passed_val, id],
+            )
+            .map_err(|e| e.to_string())?;
+        }
+
+        let action = "Toggle SF10 (Batch)";
+        let details = format!("Set sf10={} for {} students", passed, student_ids.len());
+        tx.execute(
+            "INSERT INTO logs (action, details) VALUES (?, ?)",
+            params![action, details],
+        )
+        .ok();
+
+        tx.commit().map_err(|e| e.to_string())?;
+        Ok(())
+    }
 }
