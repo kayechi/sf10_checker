@@ -149,8 +149,14 @@ export default function Tables() {
   const sortedStudents = [...students].sort((a, b) => {
     if (sortBy === "id_asc") return a.student_id.localeCompare(b.student_id);
     if (sortBy === "id_desc") return b.student_id.localeCompare(a.student_id);
-    if (sortBy === "name_asc") return a.last_name.localeCompare(b.last_name);
-    if (sortBy === "name_desc") return b.last_name.localeCompare(a.last_name);
+    if (sortBy === "name_asc") {
+      const last = a.last_name.localeCompare(b.last_name);
+      return last !== 0 ? last : a.first_name.localeCompare(b.first_name);
+    }
+    if (sortBy === "name_desc") {
+      const last = b.last_name.localeCompare(a.last_name);
+      return last !== 0 ? last : b.first_name.localeCompare(a.first_name);
+    }
     return 0;
   });
 
@@ -256,8 +262,8 @@ export default function Tables() {
             className="px-4 py-2 rounded-xl bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
           >
             <option value="">All Status</option>
-            <option value="true">Passed SF10</option>
-            <option value="false">Not Passed</option>
+            <option value="true">Submitted SF10</option>
+            <option value="false">Not Submitted</option>
           </select>
 
           <select
@@ -316,13 +322,13 @@ export default function Tables() {
                 onClick={() => setBulkStatusConfirm({ passed: true })}
                 className="px-3 py-1.5 text-sm font-semibold text-green-700 bg-green-100 hover:bg-green-200 dark:text-green-300 dark:bg-green-900/40 dark:hover:bg-green-800/60 rounded-lg transition-colors"
               >
-                Mark Passed
+                Mark Submitted
               </button>
               <button
                 onClick={() => setBulkStatusConfirm({ passed: false })}
                 className="px-3 py-1.5 text-sm font-semibold text-red-700 bg-red-100 hover:bg-red-200 dark:text-red-300 dark:bg-red-900/40 dark:hover:bg-red-800/60 rounded-lg transition-colors"
               >
-                Mark Not Passed
+                Mark Not Submitted
               </button>
               <div className="w-px h-6 bg-blue-200 dark:bg-blue-800 mx-1"></div>
               <button
@@ -368,11 +374,11 @@ export default function Tables() {
                 <th className="px-6 py-4 font-semibold text-sm">Student ID</th>
                 <th className="px-6 py-4 font-semibold text-sm">Last Name</th>
                 <th className="px-6 py-4 font-semibold text-sm">First Name</th>
-                <th className="px-6 py-4 font-semibold text-sm">Middle</th>
-                <th className="px-6 py-4 font-semibold text-sm">Course</th>
+                <th className="px-6 py-4 font-semibold text-sm">Middle Name</th>
+                <th className="px-6 py-4 font-semibold text-sm">Course Code</th>
                 <th className="px-6 py-4 font-semibold text-sm">SHS Name</th>
-                <th className="px-6 py-4 font-semibold text-sm">Enrollment</th>
-                <th className="px-6 py-4 font-semibold text-sm">Status</th>
+                <th className="px-6 py-4 font-semibold text-sm text-center">Status</th>
+                <th className="px-6 py-4 font-semibold text-sm text-center">SF10 Status</th>
                 <th className="px-6 py-4 font-semibold text-sm text-right">
                   Actions
                 </th>
@@ -448,11 +454,10 @@ export default function Tables() {
                             student.enrolled_or_not_enrolled,
                           )
                         }
-                        className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide transition-colors ${
-                          student.enrolled_or_not_enrolled
-                            ? "bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50"
-                            : "bg-orange-100 text-orange-700 hover:bg-orange-200 dark:bg-orange-900/30 dark:text-orange-400 dark:hover:bg-orange-900/50"
-                        }`}
+                        className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide transition-colors ${student.enrolled_or_not_enrolled
+                          ? "bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50"
+                          : "bg-orange-100 text-orange-700 hover:bg-orange-200 dark:bg-orange-900/30 dark:text-orange-400 dark:hover:bg-orange-900/50"
+                          }`}
                       >
                         {student.enrolled_or_not_enrolled
                           ? "Enrolled"
@@ -468,13 +473,12 @@ export default function Tables() {
                             student.status_passed_sf10,
                           )
                         }
-                        className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide transition-colors ${
-                          student.status_passed_sf10
-                            ? "bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50"
-                            : "bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50"
-                        }`}
+                        className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide transition-colors ${student.status_passed_sf10
+                          ? "bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50"
+                          : "bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50"
+                          }`}
                       >
-                        {student.status_passed_sf10 ? "Passed" : "Not Passed"}
+                        {student.status_passed_sf10 ? "Submitted" : "Not Submitted"}
                       </button>
                     </td>
 
@@ -661,8 +665,8 @@ export default function Tables() {
               </h3>
               <p className="text-sm text-neutral-600 dark:text-neutral-400">
                 {statusConfirm.currentStatus
-                  ? "Mark this student as Not Passed?"
-                  : "Mark this student as Passed?"}
+                  ? "Mark this student as Not Submitted?"
+                  : "Mark this student as Submitted?"}
               </p>
               <p className="text-xs text-neutral-500 dark:text-neutral-500">
                 This action will update the student's SF10 status in the
@@ -800,7 +804,7 @@ export default function Tables() {
               <p className="text-sm text-neutral-600 dark:text-neutral-400">
                 You are about to mark {selectedIds.size} student{selectedIds.size > 1 ? "s" : ""} as{" "}
                 <span className="font-semibold text-neutral-900 dark:text-white">
-                  {bulkStatusConfirm.passed ? "Passed" : "Not Passed"}
+                  {bulkStatusConfirm.passed ? "Submitted" : "Not Submitted"}
                 </span>.
               </p>
               <p className="text-xs text-neutral-500 dark:text-neutral-500">
