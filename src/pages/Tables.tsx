@@ -377,8 +377,8 @@ export default function Tables() {
                 <th className="px-6 py-4 font-semibold text-sm">Middle Name</th>
                 <th className="px-6 py-4 font-semibold text-sm">Course Code</th>
                 <th className="px-6 py-4 font-semibold text-sm">SHS Name</th>
-                <th className="px-6 py-4 font-semibold text-sm text-center">Status</th>
-                <th className="px-6 py-4 font-semibold text-sm text-center">SF10 Status</th>
+                <th className="px-6 py-4 font-semibold text-sm">Status</th>
+                <th className="px-6 py-4 font-semibold text-sm">SF10 Status</th>
                 <th className="px-6 py-4 font-semibold text-sm text-right">
                   Actions
                 </th>
