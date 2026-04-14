@@ -234,7 +234,7 @@ export default function Printables() {
     // Build sections with Word-native page breaks between them
     const wordPageBreak = `<br style="mso-break-type:page-break" clear="all"/>`;
     const sections = Array.from(
-      printRef.current.querySelectorAll<HTMLElement>(".print-section"),
+      printRef.current.querySelectorAll<HTMLElement>(".print-section, .page-break"),
     );
     const sectionsHtml = sections
       .map((s) => {

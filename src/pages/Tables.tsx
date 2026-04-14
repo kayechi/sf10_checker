@@ -219,6 +219,24 @@ export default function Tables() {
     }
   };
 
+  const resetFilters = () => {
+    setSearch("");
+    setYearCode(undefined);
+    setStatusFilter(undefined);
+    setEnrollmentFilter(undefined);
+    setProgramFilter("");
+    setSortBy("name_asc");
+    setCurrentPage(1);
+  };
+
+  const hasActiveFilters =
+    search !== "" ||
+    yearCode !== undefined ||
+    statusFilter !== undefined ||
+    enrollmentFilter !== undefined ||
+    programFilter !== "" ||
+    sortBy !== "name_asc";
+
   return (
     <div className="space-y-6 h-full flex flex-col">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -308,6 +326,16 @@ export default function Tables() {
             <option value="id_asc">Student ID (Asc)</option>
             <option value="id_desc">Student ID (Desc)</option>
           </select>
+
+          {hasActiveFilters && (
+            <button
+              onClick={resetFilters}
+              className="px-4 py-2 rounded-xl bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm font-medium text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors shrink-0"
+              title="Reset Filters"
+            >
+              Reset
+            </button>
+          )}
         </div>
       </div>
 
