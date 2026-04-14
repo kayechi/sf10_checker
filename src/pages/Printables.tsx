@@ -600,7 +600,7 @@ export default function Printables() {
                             </td>
                             <td
                               className="py-2 px-3 font-normal border border-neutral-900 dark:border-neutral-500 text-center whitespace-nowrap"
-                              style={{ width: "16.67%" }}
+                              style={{ width: "16.67%", textAlign: "center" }}
                             >
                               {student.program}
                             </td>
