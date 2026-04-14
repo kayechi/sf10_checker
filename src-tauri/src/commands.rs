@@ -529,9 +529,4 @@ pub mod commands {
         tx.commit().map_err(|e| e.to_string())?;
         Ok(())
     }
-
-    #[tauri::command]
-    pub fn save_file_text(path: String, content: String) -> Result<(), String> {
-        std::fs::write(path, content).map_err(|e| e.to_string())
-    }
 }
