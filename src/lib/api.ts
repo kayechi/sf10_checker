@@ -101,7 +101,4 @@ export const api = {
     invoke<void>("delete_import_batch", { id }),
 
   getLogs: () => invoke<LogEntry[]>("get_logs"),
-
-  saveFileText: (path: string, content: string) =>
-    invoke<void>("save_file_text", { path, content }),
 };

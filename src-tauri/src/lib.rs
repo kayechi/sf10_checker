@@ -7,7 +7,6 @@ use tauri::Manager;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
             let conn = db::db::init_db(app.handle()).expect("Failed to initialize database");
@@ -27,8 +26,7 @@ pub fn run() {
             commands::commands::import_students,
             commands::commands::get_import_batches,
             commands::commands::delete_import_batch,
-            commands::commands::get_logs,
-            commands::commands::save_file_text
+            commands::commands::get_logs
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
