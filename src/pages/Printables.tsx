@@ -3,6 +3,7 @@ import { usePersistentState } from "../hooks/usePersistentState";
 import { api, DashboardStats, Student } from "../lib/api";
 import { Printer, FileText, CheckCircle, FileSpreadsheet } from "lucide-react";
 import Papa from "papaparse";
+import { save } from "@tauri-apps/plugin-dialog";
 
 export default function Printables() {
   const [sf10Option, setSf10Option] = usePersistentState<string>(
@@ -212,7 +213,7 @@ export default function Printables() {
   };
 
   // ---- Save As: Word (.doc) ----
-  const handleSaveAsWord = () => {
+  const handleSaveAsWord = async () => {
     if (!printRef.current) return;
 
     // A4 Word page layout: 11906 twips wide, 16838 twips tall, 720 twip (0.5in) margins
@@ -269,15 +270,22 @@ export default function Printables() {
       </html>
     `;
 
-    const blob = new Blob([html], { type: "application/msword" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
     const filename = `report_${yearOption || "all"}_${semester.replace(/ /g, "_")}.doc`;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast(`Saved: ${filename}`);
+    
+    try {
+      const filePath = await save({
+        defaultPath: filename,
+        filters: [{ name: "Word Document", extensions: ["doc"] }]
+      });
+
+      if (filePath) {
+        await api.saveFileText(filePath, html);
+        showToast(`Saved to ${filePath.split(/[/\\]/).pop()}`);
+      }
+    } catch (err) {
+      console.error("Failed to save Word document:", err);
+      showToast("Failed to save Word document");
+    }
   };
 
   const handleExportCSV = async () => {
@@ -298,15 +306,17 @@ export default function Printables() {
       }));
 
       const csv = Papa.unparse(csvData);
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
       const filename = `students_export_${yearOption || "all_years"}.csv`;
-      a.download = filename;
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast(`Exported: ${filename}`);
+      
+      const filePath = await save({
+        defaultPath: filename,
+        filters: [{ name: "CSV File", extensions: ["csv"] }]
+      });
+
+      if (filePath) {
+        await api.saveFileText(filePath, csv);
+        showToast(`Saved to ${filePath.split(/[/\\]/).pop()}`);
+      }
     } catch (err) {
       console.error("Failed to export CSV:", err);
       showToast("Failed to export CSV");
